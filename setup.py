@@ -17,7 +17,7 @@ setup(
     ],
     classifiers=[
     'Development Status :: 4 - Beta',
-    'Intended Audience :: Developers, Visual Artists, Anyone',
+    'Intended Audience :: Other Audience',
     'Topic :: Software Development :: Build Tools',
     'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3',
