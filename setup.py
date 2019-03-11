@@ -12,7 +12,7 @@ setup(
     download_url = 'https://github.com/spacerest/moonmask/archive/v_02.tar.gz',
     keywords = ['MOON', 'ART'],
     install_requires=[
-        'PIL',
+        'Pillow==5.4.1',
         'urllib'
     ],
     classifiers=[
