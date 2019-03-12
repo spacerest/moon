@@ -12,8 +12,8 @@
      `.       .'     `.     .::'     `.   :::::'      `. '::::::'      `:::::::::'
        `-...-'         `-..:''         `-.::''          `-.::''          `':::''
        
-              moon ascii art courtesy of (jsg)[http://www.ascii-art.de/ascii/mno/moon.txt]
 
+moon ascii art courtesy of [jsg](http://www.ascii-art.de/ascii/mno/moon.txt)
 
 # moonmask
 
