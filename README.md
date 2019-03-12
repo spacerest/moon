@@ -4,7 +4,7 @@ This is a small library that uses PIL and Ernie Wright's moon visualizations fro
 
 ## intended usage (mac/linux instructions):
 
-First, (make sure that pip and python3 are installed)[https://realpython.com/installing-python/]. A (virtual environment)[https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b] would be a good idea, though would be optional.
+First, [make sure that pip and python3 are installed](https://realpython.com/installing-python/). A [virtual environment](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b) would be a good idea, though would be optional.
 
 Next, install this package:
 
