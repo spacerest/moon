@@ -1,7 +1,3 @@
-# moonmask
-
-This is a small library that uses PIL and Ernie Wright's moon visualizations from the Nasa Visualization Studio to create artistic renderings of moonphases. 
-
         _..._           _..._            _..._            _..._            _..._
       .:::::::.       .::::. `.        .::::  `.        .::'   `.        .'     `.
      :::::::::::     :::::::.  :      ::::::    :      :::       :      :         :  
@@ -9,57 +5,39 @@ This is a small library that uses PIL and Ernie Wright's moon visualizations fro
      `:::::::::'     `::::::' .'      `:::::   .'      `::.     .'      `.       .'
        `':::''         `'::'-'         `'::.-'           `':..-'          `-...-'
 
-        _..._             _..._
-      .'     `.         .'   `::.
-     :         :       :       ::: 
-     :         :       :       :::
-     `.       .'       `.     .::'
-       `-...-'           `-..:''
+        _..._           _..._           _..._            _..._            _..._
+      .'     `.       .'   `::.       .'  ::::.        .' .::::.        .:::::::.
+     :         :     :       :::     :    ::::::      :  ::::::::      ::::::::::: 
+     :         :     :       :::     :    ::::::      :  ::::::::      :::::::::::
+     `.       .'     `.     .::'     `.   :::::'      `. '::::::'      `:::::::::'
+       `-...-'         `-..:''         `-.::''          `-.::''          `':::''
        
-              ascii art courtesy of [jsg](http://www.ascii-art.de/ascii/mno/moon.txt)
+              moon ascii art courtesy of [jsg](http://www.ascii-art.de/ascii/mno/moon.txt)
 
-        _..._
-      .'   `::.
-     :       ::: 
-     :       :::
-     `.     .::'
-       `-..:''
-        _..._
-      .'  ::::.
-     :    ::::::    LAST QUARTER
-     :    ::::::
-     `.   :::::'
-       `-.::''
-        _..._
-      .' .::::.
-     :  ::::::::    WANING CRESCENT
-     :  ::::::::
-     `. '::::::'
- jgs   `-.::''
-        _..._
-      .:::::::.
-     :::::::::::    NEW MOON
-     :::::::::::
-     `:::::::::'
-       `':::''
+
+# moonmask
+
+This is a small library that uses PIL and Ernie Wright's moon visualizations from the Nasa Visualization Studio to create artistic renderings of moonphases. 
+
+
 
 ## intended usage (mac/linux instructions):
 
-First, [make sure that pip and python3 are installed](https://realpython.com/installing-python/). A [virtual environment](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b) would be a good idea, though would be optional.
+1. First, [make sure that pip and python3 are installed](https://realpython.com/installing-python/). A [virtual environment](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b) would be a good idea, though would be optional.
 
-Next, install this package:
+2. Next, install this package:
 
 ```bash
 pip install moonmask
 ```
 
-Now to use this package and make an image, open up a python interactive shell:
+3. Now to use this package and make an image, open up a python interactive shell:
 
 ```bash
 python
 ```
 
-You can now run these commands to simply generate a black and white version of the current moon phase:
+4. You can now run these commands to simply generate a black and white version of the current moon phase:
 
 ```python
 >>> from moonmask import collage
@@ -95,9 +73,9 @@ There are other parameters that these functions take. For example, wherever you 
 
 # Updates
 
-There will be updates to this package soon. 
+There will be updates to this package soon. It is actively being maintained as of March 12, 2019, so please feel free to post bugs and feature requests on this repo.
 
 
 Resources:
-- https://svs.gsfc.nasa.gov/4442
-- https://medium.com/@joel.barmettler/how-to-upload-your-python-package-to-pypi-65edc5fe9c56
+- [nasa moon visualization studio](https://svs.gsfc.nasa.gov/4442)
+- [how to publish a python package on pypi](https://medium.com/@joel.barmettler/how-to-upload-your-python-package-to-pypi-65edc5fe9c56)
