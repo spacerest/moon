@@ -25,7 +25,7 @@ This is a small library that uses PIL and Ernie Wright's moon visualizations fro
 
 1. First, [make sure that pip and python3 are installed](https://realpython.com/installing-python/). A [virtual environment](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b) would be a good idea, though would be optional.
 
-2. Next, install this package. First, open Terminal or another command line interface on your computer and then install the package by typing:
+2. Next, install this package. Open terminal or another command line interface on your computer and then install the package by typing:
 
 ```bash
 pip install moonmask
