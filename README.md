@@ -31,7 +31,7 @@ This is a small library that uses PIL and Ernie Wright's moon visualizations fro
 pip install moonmask
 ```
 
-3. Now to use this package and make an image, open up a python interactive shell:
+3. Now to use this package and make an image, open up a python interactive shell by typing:
 
 ```bash
 python
