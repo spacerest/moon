@@ -1,4 +1,4 @@
-import moonmask.custom_image
+import moonmask.custom_image as custom_image
 from moonmask.constants import *
 from datetime import datetime, timezone, timedelta
 
