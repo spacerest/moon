@@ -7,15 +7,18 @@ class CustomImage():
         self.size = img_size
         return
 
-    def set_image(self, url="", instagram_url="", filename=""):
+    def set_image(self, url="", instagram_url="", filename="", color=""):
         #if more than one of these parameters are provided, raise an error.
-        #TODO check for a cleaner way to do this
-        if (url and instagram_url) or (url and filename) or (instagram_url and filename):
-            raise Exception("set_image takes only one parameter")
 
         if url: return self.load_from_url(url)
         if instagram_url: return self.load_from_instagram(instagram_url)
         if filename: return self.load_from_filesystem(filename)
+        if color: return self.make_custom_image(color)
+
+    def make_custom_image(self, color):
+        print("making an image that has the color" + str(color))
+        self.image = Image.new('RGB', self.size, color)
+        return self.image
 
     def load_from_instagram(self, instagram_url):
         #TODO check if link has extra info at the end

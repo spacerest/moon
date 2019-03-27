@@ -1,3 +1,8 @@
 venv
 **/__pycache__
 **/*.png
+images/
+*.png
+*.jpg
+**/test.py
+**/session.txt

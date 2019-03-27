@@ -1,96 +1,102 @@
 from PIL import Image
 from PIL import ImageOps
-from moonmask import mask
-from moonmask import custom_image
-from moonmask import moon_image as moon
-from moonmask.constants import *
+import mask as mask
+import custom_image as custom_image
+import moon_image as moon
+from constants import *
 
 class Collage():
 
     def __init__(self):
         self.main_image = None
-        self.main_background = None
-        self.moon_foreground = None
-        self.moon_mask = None
+        self.mask_negative_space = None
+        self.mask_positive_space = None
+        self.mask = None
         self.img_size = (1000,1000)
         return
 
-    def set_moon_mask(self, date=None, relative_date="today", filename=None):
+    def set_mask(self, date=None, relative_date="today", filename=None):
         """Sets the image that will be used as a mask on the image
 
         Keyword arguments:
         date -- the date in format YYYYMMDD
         relative_date -- defaults to "today". Other accepted options are "yesterday" and "tomorrow"
         """
-        self.moon_mask = moon.MoonImage(size=self.img_size)
-        self.moon_mask = self.moon_mask.set_moon_image(date=date, relative_date=relative_date, filename=filename)
+        self.mask = moon.MoonImage(size=self.img_size)
+        self.mask = self.mask.set_moon_image(date=date, relative_date=relative_date, filename=filename)
 
-    def set_main_image(self, url="", instagram_url="", filename=""):
+    def set_main_image(self, url="", instagram_url="", filename="", color=""):
         img_size = (1000,1000)
-        self.main_image = custom_image.CustomImage(img_size).set_image(url, instagram_url, filename)
+        self.main_image = custom_image.CustomImage(img_size).set_image(url, instagram_url, filename, color)
         return
 
-    def set_main_background(self, url="", instagram_url="", filename=""):
+    def set_mask_negative_space(self, url="", instagram_url="", filename="", color=""):
         img_size = (1000,1000)
-        self.main_background = custom_image.CustomImage(img_size).set_image(url, instagram_url, filename)
+        self.mask_negative_space = custom_image.CustomImage(img_size).set_image(url, instagram_url, filename, color)
         return
 
-    def set_moon_foreground(self, url="", instagram_url="", filename=""):
+    def set_mask_positive_space(self, url="", instagram_url="", filename="", color=""):
         img_size = (1000,1000)
-        self.moon_foreground = custom_image.CustomImage(img_size).set_image(url, instagram_url, filename)
+        self.mask_positive_space = custom_image.CustomImage(img_size).set_image(url, instagram_url, filename, color)
         return
 
-    def make_collage(self, filename, selfie_file=None, moon_file=None, foreground_file=None, background_file=None, foreground_transparency=200, background_transparency=50, dimensionality=3, img_size=1000):
+    def make_collage(self, filename, main_image_file=None, mask_file=None, positive_space_file=None, negative_space_file=None, positive_space_transparency=200, negative_space_transparency=50, dimensionality=3, img_size=1000):
         img_size = (img_size, img_size)
 
         if self.main_image:
-            selfie = self.main_image#custom_image.CustomImage(img_size).load_from_instagram(test_url)
-            moon_shaped_selfie = self.main_image#custom_image.CustomImage(img_size).load_from_filesystem(selfie_file)
+            main_image = self.main_image#custom_image.CustomImage(img_size).load_from_instagram(test_url)
+            mask_shaped_main_image = self.main_image#custom_image.CustomImage(img_size).load_from_filesystem(main_image_file)
         else:
-            selfie = Image.new('RGB', img_size, 'black')
-            moon_shaped_selfie = Image.new('RGB', img_size, 'black')
+            main_image = Image.new('RGB', img_size, 'black')
+            mask_shaped_main_image = Image.new('RGB', img_size, 'black')
 
-        #give the selfie image the requested white borders
-        white_background = Image.new('RGB', img_size, "white")
+        #give the main_image image the requested white borders
+        white_negative_space = Image.new('RGB', img_size, "white")
 
-        selfie = ImageOps.fit(selfie, img_size, Image.ANTIALIAS)
-        moon_shaped_selfie = ImageOps.fit(moon_shaped_selfie, img_size, Image.ANTIALIAS)
+        main_image = ImageOps.fit(main_image, img_size, Image.ANTIALIAS)
+        mask_shaped_main_image = ImageOps.fit(mask_shaped_main_image, img_size, Image.ANTIALIAS)
 
-        if self.main_background:
-            background = self.main_background#Image.open(background_file, 'r')
-            background = ImageOps.fit(background, img_size, Image.ANTIALIAS)
+        if self.mask_negative_space:
+            negative_space = self.mask_negative_space#Image.open(negative_space_file, 'r')
+            negative_space = ImageOps.fit(negative_space, img_size, Image.ANTIALIAS)
         else:
-            background= Image.new('RGB',img_size,'black')
+            negative_space= Image.new('RGB',img_size,'black')
 
-        if self.moon_foreground:
-            moon_shaped_foreground = self.moon_foreground#Image.open(foreground_file)
-            moon_shaped_foreground = ImageOps.fit(moon_shaped_foreground, img_size, Image.ANTIALIAS)
+        if self.mask_positive_space:
+            mask_shaped_positive_space = self.mask_positive_space#Image.open(positive_space_file)
+            mask_shaped_positive_space = ImageOps.fit(mask_shaped_positive_space, img_size, Image.ANTIALIAS)
         else:
-            moon_shaped_foreground = Image.new('RGB', img_size, 'white')
+            mask_shaped_positive_space = Image.new('RGB', img_size, 'white')
 
-        background_mask = mask.Mask(background, 255, img_size, background_transparency).get_mask()
+        negative_space_mask = mask.Mask(negative_space, 255, img_size, negative_space_transparency).get_mask()
 
-        #put transparent background over selfie
-        selfie.paste(background, (0,0), mask=background_mask)
+        #put transparent negative_space over main_image
+        main_image.paste(negative_space, (0,0), mask=negative_space_mask)
 
         transparency_divisor = dimensionality + 1
 
-        #loop through a range, so that different brightnesses of the moon
-        #are represented with different transparencies of the foreground
+        #loop through a range, so that different brightnesses of the mask
+        #are represented with different transparencies of the positive_space
         for i in range(1, dimensionality + 1):
             transparency_divisor -= 1
 
-            moon_mask = mask.Mask(self.moon_mask, 40 * i, img_size).get_mask()
-            moon_mask_transparent = mask.Mask(self.moon_mask, 40 * i, img_size).get_mask()
-            moon_mask_transparent = moon_mask_transparent.point(lambda j: min(j * 25, foreground_transparency / transparency_divisor))
+            current_transparency = (positive_space_transparency / transparency_divisor) + ((255 - positive_space_transparency / transparency_divisor) / transparency_divisor)
+            #255 / 1 + (255 - 255) / 1 = 255
+            #255 / 2 + (255 - 123) / 2 = 123
+            #255 / 3 + (255 - 61 / 3) = 61
 
-            moon_shaped_foreground.putalpha(moon_mask_transparent)
+            current_mask = mask.Mask(self.mask, 40 * i, img_size).get_mask()
+            mask_transparent = mask.Mask(self.mask, 40 * i, img_size).get_mask()
+            mask_transparent = mask_transparent.point(lambda j: min(j * 25, current_transparency))
 
-            #reput moon shaped selfie on top of transparent background
-            moon_shaped_selfie.putalpha(moon_mask)
-            selfie.paste(moon_shaped_selfie, (0,0), mask=moon_shaped_selfie)
+            mask_shaped_positive_space.putalpha(mask_transparent)
 
-            #put foreground over moon
-            selfie.paste(moon_shaped_foreground, (0,0), mask=moon_mask_transparent)
+            #reput mask shaped main_image on top of transparent negative_space
+            mask_shaped_main_image.putalpha(current_mask)
+            main_image.paste(mask_shaped_main_image, (0,0), mask=mask_shaped_main_image)
 
-        selfie.save(filename + ".png", format='PNG')
+            #put positive_space over mask
+            main_image.paste(mask_shaped_positive_space, (0,0), mask=mask_transparent)
+
+        main_image.save(filename + ".jpg", format='JPEG')
+        main_image.show()

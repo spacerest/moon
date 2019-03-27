@@ -1,5 +1,5 @@
-from . import custom_image
-from moonmask.constants import *
+import custom_image
+from constants import *
 from datetime import datetime, timezone, timedelta
 
 class MoonImage(custom_image.CustomImage):
@@ -54,3 +54,7 @@ class MoonImage(custom_image.CustomImage):
             frame_id = str(self.frame_id)
         )
         return url
+
+    def save_moon(self):
+        if (self.datetime and self.image):
+            self.image.save("moon-image-" + self.datetime + ".jpg")

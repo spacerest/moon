@@ -1,3 +1,7 @@
+SESSIONS_PATH = "./session.txt"
+
+USERTAGS = [{'user_id': 8406048321,'position': [.1,.1]},]
+
 NASA_ID = {
     "2019": 4442,
     "2018": 4604,
