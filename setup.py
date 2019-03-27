@@ -3,13 +3,13 @@ from distutils.core import setup
 setup(
     name = 'moonmask',
     packages = ['moonmask'],
-    version = '0.7',
+    version = '0.8',
     license='MIT',
     description = 'Gets moon visualizations courtesy of Ernie Wright and uses them for artistic collages',
     author = 'Sadie Parker',
     author_email = 'sadiemparker@gmail.com',
     url = 'https://github.com/spacerest/moonmask',
-    download_url = 'https://github.com/spacerest/moonmask/archive/v_07.tar.gz',
+    download_url = 'https://github.com/spacerest/moonmask/archive/v_08.tar.gz',
     keywords = ['MOON', 'ART'],
     install_requires=[
         'Pillow==5.4.1',

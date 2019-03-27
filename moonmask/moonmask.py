@@ -1,5 +1,5 @@
-from collage import Collage
-from instagram_wrapper import InstagramWrapper
+from moonmask.collage import Collage
+from moonmask.instagram_wrapper import InstagramWrapper
 
 class MoonMask():
 

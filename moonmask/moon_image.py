@@ -1,5 +1,5 @@
-import custom_image
-from constants import *
+import moonmask.custom_image
+from moonmask.constants import *
 from datetime import datetime, timezone, timedelta
 
 class MoonImage(custom_image.CustomImage):
