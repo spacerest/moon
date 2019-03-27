@@ -1,9 +1,9 @@
 from PIL import Image
 from PIL import ImageOps
-import mask as mask
-import custom_image as custom_image
-import moon_image as moon
-from constants import *
+import moonmask.mask as mask
+import moonmask.custom_image as custom_image
+import moonmask.moon_image as moon
+from moonmask.constants import *
 
 class Collage():
 
