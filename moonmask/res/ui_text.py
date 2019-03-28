@@ -86,7 +86,7 @@ SET_MAIN_IMAGE_COMMAND = "ui.set_main_image(color=(240, 128, 128))"
 
 SAVE_COLLAGE_COMMAND = "ui.save_collage(filename='moon')"
 
-TUTORIAL_PROMPT_FOR_COMMAND = "Try out the above command below (type it just how you see it): "
+TUTORIAL_PROMPT_FOR_COMMAND = "Type out the command from above (the command after '>>>'. For this tutorial, you'll have to exactly match it. If you get stuck and need to exit, remember that ctrl-c will get you out of this tutorial."
 
 TUTORIAL_TRY_AGAIN_PROMPT = "That doesn't match '{}', please try again:"
 
@@ -102,7 +102,7 @@ FINISHED_TUTORIAL_MESSAGE = "Well, this is the end of the moonmask tutorial! For
 
 NAVIGATION_REMINDER = "To exit this tutorial you can press ctrl-C at any time. To go back in the tutorial you can scroll up ^."
 
-USER_SUCCESS_MESSAGE = "Perfect."
+USER_SUCCESS_MESSAGE = "Nice :)"
 
 CREDITS_LIST = ["Thanks to Ernie Wright of Nasa for creating the moon visualizations that the generated moon masks are based on. Check out his visualizations here: https://svs.gsfc.nasa.gov/cgi-bin/search.cgi?person=105 ","Thanks to Joan Stark for the ascii art used in this tutorial. I read a nice interview by her here: http://www.lastplace.com/ASCIIart/starkascii.htm.", "If you'd like to help on this project and get added to this credits list, please contact me <3 (my github username is spacerest)"]
 
@@ -110,7 +110,7 @@ SHOW_INFO = "Welcome to moonmask! You can use this package to get a 'mask' of th
 
 PRESS_ENTER_TO_CONTINUE = "(Please press enter to continue...)"
 
-SAVE_COLLAGE_CONFIRMATION = "A sample image of your collage should have opened up just now. This is a temporary file. You should have a saved version of the image by this name: "
+SAVE_COLLAGE_CONFIRMATION = "If you're running this tutorial locally, a sample image of your collage should have opened up just now. If you're running this tutorial on an online repl like repl.it, then you won't see any image until the end of the tutorial. Anyway, if an image opened up, it is a temporary file that has just opened up to show you what the current image looks like. There should also be a saved version of the image by this name: "
 
 OVERWRITE_FILENAME_NOTICE = "Since you haven't specified a different filename, it will be saved as '{}.jpg'. If you already have a file called '{}.jpg', this will probably overwrite your original file."
 
