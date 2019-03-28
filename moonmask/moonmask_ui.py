@@ -226,6 +226,8 @@ class MoonMaskUI():
         self.print_text(FINISHED_TUTORIAL_MESSAGE)
         self.print_text((WHITESPACE))
         self.print_ascii_art(MOON_WANING_ASCII_ART)
+        self.enter_to_continue()
+        self.clear_screen()
         self.show_credits()
 
     def show_tutorial(self):

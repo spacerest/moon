@@ -44,9 +44,11 @@ SET_POSITIVE_SPACE_TUTORIAL_STEP = [
 ]
 
 SET_POSITIVE_SPACE_COMMAND = "ui.set_positive_space(color='yellow')"
-SET_POSITIVE_SPACE_COMMAND2 = "ui.set_positive_space(url='https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png')"
-SET_POSITIVE_SPACE_COMMAND3 = "ui.set_positive_space(instagram_url='https://www.instagram.com/p/Bjo2ftsH2KC/')"
-SET_POSITIVE_SPACE_COMMAND4 = "ui.set_positive_space(filename='i_am_not_a_real_file.jpg')"
+
+#TODO set command_prompt icons for these command2-4 in the way you're setting the others
+SET_POSITIVE_SPACE_COMMAND2 = ">>  ui.set_positive_space(url='https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png')"
+SET_POSITIVE_SPACE_COMMAND3 = ">>  ui.set_positive_space(instagram_url='https://www.instagram.com/p/Bjo2ftsH2KC/')"
+SET_POSITIVE_SPACE_COMMAND4 = ">>  ui.set_positive_space(filename='i_am_not_a_real_file.jpg')"
 
 LETS_SAVE_TUTORIAL_STEP = [
     "Let's save this to take a look at it.",

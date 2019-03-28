@@ -1,0 +1,20 @@
+Metadata-Version: 1.1
+Name: moonmask
+Version: 1.4
+Summary: Gets moon visualizations courtesy of Ernie Wright and uses them for artistic collages
+Home-page: https://github.com/spacerest/moonmask
+Author: Sadie Parker
+Author-email: sadiemparker@gmail.com
+License: MIT
+Download-URL: https://github.com/spacerest/moonmask/archive/v_14.tar.gz
+Description: UNKNOWN
+Keywords: MOON,ART
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Other Audience
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
