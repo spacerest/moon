@@ -3,11 +3,10 @@ setup.cfg
 setup.py
 moonmask/__init__.py
 moonmask/collage.py
-moonmask/constants.py
 moonmask/custom_image.py
 moonmask/custom_instagram_api.py
 moonmask/instagram_wrapper.py
 moonmask/mask.py
 moonmask/moon_image.py
-moonmask/moonmask.py
+moonmask/moonmask_ui.py
 moonmask/test.py

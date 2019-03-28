@@ -1,7 +1,10 @@
+#for saving an instagram session
 SESSIONS_PATH = "./session.txt"
 
+#for tagging @mun_fases in instagram photos
 USERTAGS = [{'user_id': 8406048321,'position': [.1,.1]},]
 
+#ids to access the moon visualizations per year
 NASA_ID = {
     "2019": 4442,
     "2018": 4604,
@@ -13,4 +16,5 @@ NASA_ID = {
     "2012": 3894,
     "2011": 3810,
 }
+
 

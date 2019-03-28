@@ -1,7 +1,7 @@
 from moonmask.custom_instagram_api import CustomInstagramAPI
 import requests
 from io import BytesIO
-from moonmask.constants import *
+from moonmask.res.constants import *
 import pickle
 
 class InstagramWrapper():

@@ -1,5 +1,5 @@
 import moonmask.custom_image as custom_image
-from moonmask.constants import *
+from moonmask.res.constants import *
 from datetime import datetime, timezone, timedelta
 
 class MoonImage(custom_image.CustomImage):
@@ -58,3 +58,6 @@ class MoonImage(custom_image.CustomImage):
     def save_moon(self):
         if (self.datetime and self.image):
             self.image.save("moon-image-" + self.datetime + ".jpg")
+
+    def get_moon_phase_date(self):
+        return self.datetime
