@@ -6,3 +6,4 @@ images/
 *.jpg
 **/test.py
 **/session.txt
+*egg-info
