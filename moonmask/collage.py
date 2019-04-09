@@ -13,6 +13,7 @@ class Collage():
         self.moon_mask_positive_space = None
         self.moon_mask = None
         self.img_size = (1000,1000)
+        self.image_queue = {}
         return
 
     def set_mask(self, date=None, relative_date="today", filename=None):
@@ -26,23 +27,43 @@ class Collage():
         self.moon_mask = self.moon_image.set_moon_image(date=date, relative_date=relative_date, filename=filename)
         return
 
+    def add_to_image_queue(self, image_key, image=None, url="", instagram_url="", filename="", color=""):
+        if image:
+            self.image_queue[image_key] = image
+        else:
+            self.image_queue[image_key] = custom_image.CustomImage(self.img_size).set_image(url, instagram_url, filename, color)
+        return
+
+    def list_image_queue(self):
+        for image_key in self.image_queue:
+            print(image_key)
+        return
+
     def get_moon_phase_date(self):
         return self.moon_image.get_moon_phase_date()
 
-    def set_main_image(self, url="", instagram_url="", filename="", color=""):
-        img_size = (1000,1000)
-        self.main_image = custom_image.CustomImage(img_size).set_image(url, instagram_url, filename, color)
+    def set_main_image(self, image_key, url="", instagram_url="", filename="", color=""):
+        self.main_image = self.create_image(image_key, url, instagram_url, filename, color)
         return
 
-    def set_mask_negative_space(self, url="", instagram_url="", filename="", color=""):
-        img_size = (1000,1000)
-        self.moon_mask_negative_space = custom_image.CustomImage(img_size).set_image(url, instagram_url, filename, color)
+    def set_mask_negative_space(self, image_key, url="", instagram_url="", filename="", color=""):
+        self.moon_mask_negative_space = self.create_image(image_key, url, instagram_url, filename, color)
         return
 
-    def set_mask_positive_space(self, url="", instagram_url="", filename="", color=""):
-        img_size = (1000,1000)
-        self.moon_mask_positive_space = custom_image.CustomImage(img_size).set_image(url, instagram_url, filename, color)
+    def set_mask_positive_space(self, image_key, url="", instagram_url="", filename="", color=""):
+        self.moon_mask_positive_space = self.create_image(image_key, url, instagram_url, filename, color)
         return
+
+    def create_image(self, image_key, url="", instagram_url="", filename="", color=""):
+        if not image_key in self.image_queue:
+            if not url and not instagram_url and not filename and not color:
+                raise Exception("There is no image in queue that has the key " + image_key)
+            else:
+                created_image = custom_image.CustomImage(self.img_size).set_image(url, instagram_url, filename, color)
+                self.image_queue[image_key] = created_image
+        else:
+            created_image = self.image_queue[image_key]
+        return created_image
 
     def make_collage(self, filename, main_image_file=None, mask_file=None, positive_space_file=None, negative_space_file=None, positive_space_transparency=200, negative_space_transparency=50, dimensionality=3, img_size=1000):
         img_size = (img_size, img_size)
