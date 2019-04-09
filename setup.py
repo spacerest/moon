@@ -4,13 +4,13 @@ from setuptools import setup, find_packages
 setup(
     name = 'moonmask',
     packages = find_packages(),
-    version = '1.6',
+    version = '1.7',
     license='MIT',
     description = 'Gets moon visualizations courtesy of Ernie Wright and uses them for artistic collages',
     author = 'Sadie Parker',
     author_email = 'sadiemparker@gmail.com',
     url = 'https://github.com/spacerest/moonmask',
-    download_url = 'https://github.com/spacerest/moonmask/archive/v_16.tar.gz',
+    download_url = 'https://github.com/spacerest/moonmask/archive/v_17.tar.gz',
     keywords = ['MOON', 'ART'],
     install_requires=[
         'Pillow==5.4.1',
