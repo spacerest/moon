@@ -125,11 +125,11 @@ class Collage():
             main_image.paste(mask_shaped_positive_space, (0,0), mask=mask_transparent)
         self.created_collage = main_image
 
-        def desktop_show_collage(self):
-            self.created_collage.show()
+    def desktop_show_collage(self):
+        self.created_collage.show()
 
-        def save_collage(self, filename):
-            self.created_collage.save(filename + '.jpg', format='JPEG')
+    def save_collage(self, filename):
+        self.created_collage.save(filename + '.jpg', format='JPEG')
 
-        def get_created_collage(self):
-            return self.created_collage
+    def get_created_collage(self):
+        return self.created_collage
