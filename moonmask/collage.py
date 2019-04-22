@@ -14,6 +14,7 @@ class Collage():
         self.moon_mask = None
         self.img_size = (1000,1000)
         self.image_queue = {}
+        self.created_collage = None
         return
 
     def set_mask(self, date=None, relative_date="today", filename=None):
@@ -65,7 +66,7 @@ class Collage():
             created_image = self.image_queue[image_key]
         return created_image
 
-    def make_collage(self, filename, main_image_file=None, mask_file=None, positive_space_file=None, negative_space_file=None, positive_space_transparency=200, negative_space_transparency=50, dimensionality=3, img_size=1000):
+    def create_collage(self, main_image_file=None, mask_file=None, positive_space_file=None, negative_space_file=None, positive_space_transparency=200, negative_space_transparency=50, dimensionality=3, img_size=1000):
         img_size = (img_size, img_size)
 
         if self.main_image:
@@ -122,6 +123,13 @@ class Collage():
 
             #put positive_space over mask
             main_image.paste(mask_shaped_positive_space, (0,0), mask=mask_transparent)
+        self.created_collage = main_image
 
-        main_image.save(filename + ".jpg", format='JPEG')
-        main_image.show()
+        def desktop_show_collage(self):
+            self.created_collage.show()
+
+        def save_collage(self, filename):
+            self.created_collage.save(filename + '.jpg', format='JPEG')
+
+        def get_created_collage(self):
+            return self.created_collage
