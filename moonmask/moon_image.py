@@ -44,7 +44,7 @@ class MoonImage(custom_image.CustomImage):
         moon_imagenum = int(round((self.datetime - janone ).total_seconds() / 3600))
         if (moon_imagenum > 8760):
             moon_imagenum = 8760
-        return str(moon_imagenum).zfill(4)
+        return str(moon_imagenum + 1).zfill(4)
 
     def get_moon_url(self, date):
         self.nasa_id = NASA_ID["2019"]
