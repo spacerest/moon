@@ -40,8 +40,8 @@ python
 4. You can now run these commands to simply generate a black and white version of the current moon phase:
 
 ```python
->>> from moonmask import collage
->>> moonmask = collage.Collage()
+>>> from moonmask.collage import Collage
+>>> moonmask = Collage()
 >>> moonmask.set_moon_mask()
 >>> moonmask.make_collage("current_moon_phase") #current_moon_phase will be the name of the file in this example
 >>> exit()
