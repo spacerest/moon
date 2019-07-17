@@ -16,7 +16,6 @@ class CustomImage():
         if color: return self.make_custom_image(color)
 
     def make_custom_image(self, color):
-        print("making an image that has the color" + str(color))
         self.image = Image.new('RGB', self.size, color)
         return self.image
 

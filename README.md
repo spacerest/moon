@@ -55,13 +55,14 @@ You can add a few commands to make it a collage made up of different images:
 
 ```python
 
->>> from moonmask import collage
->>> moonmask = collage.Collage()
->>> moonmask.set_moon_mask()
+>>> from moonmask.collage import Collage
+>>> moonmask = Collage()
+>>> moonmask.set_mask()
 >>> moonmask.set_main_image(instagram_url="https://instagram.com/p/SOME_LETTERS_NUMBERS_SYMBOLS_1/")
->>> moonmask.set_moon_foreground(instagram_url="https://instagram.com/p/SOME_LETTERS_NUMBERS_SYMBOLS_2/")
->>> moonmask.set_main_background(instagram_url="https://instagram.com/p/SOME_LETTERS_NUMBERS_SYMBOLS_3/")
->>> moonmask.make_collage("moon_collage")
+>>> moonmask.set_mask_positive_space(instagram_url="https://instagram.com/p/SOME_LETTERS_NUMBERS_SYMBOLS_2/")
+>>> moonmask.set_mask_negative_space(instagram_url="https://instagram.com/p/SOME_LETTERS_NUMBERS_SYMBOLS_3/")
+>>> moonmask.create()
+>>> moonmask.save_collage("moon_collage")
 >>> exit()
 ```
 
@@ -75,7 +76,8 @@ There are other parameters that these functions take. For example, wherever you 
 
 There will be updates to this package soon. It is actively being maintained as of March 12, 2019, so please feel free to post bugs and feature requests on this repo.
 
-
 Resources:
 - [nasa moon visualization studio](https://svs.gsfc.nasa.gov/4442)
 - [how to publish a python package on pypi](https://medium.com/@joel.barmettler/how-to-upload-your-python-package-to-pypi-65edc5fe9c56)
+- [pixelation with
+    opencv](https://medium.com/@elvisdias/lets-work-with-borders-opencv-implementation-in-python-b37c3d87c73a)
