@@ -1,7 +1,6 @@
 import pytest
 import cv2
 from moonmask.opencv import custom_image
-from moonmask.opencv.tests.res.constants import *
 
 SIZE = (1000,1000)
 
@@ -21,8 +20,7 @@ class TestClass(object):
         assert pytest.custom_image.image[0][0].tolist() == [0, 0, 0]
 
     def test_pull_from_url(self):
-        pytest.custom_image.load_from_url(IMAGE_URL)#"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-v0jIG6GMLRO_Wel0PV6cHmzc8iwve_1hW7GeiSUq_wosKJXysw")
-        self.show_image(pytest.custom_image.image)
+        pytest.custom_image.load_from_url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-v0jIG6GMLRO_Wel0PV6cHmzc8iwve_1hW7GeiSUq_wosKJXysw")
         assert pytest.custom_image.image.shape[0:2] == SIZE
 
     def test_makes_vertical_stripe_half_image(self):

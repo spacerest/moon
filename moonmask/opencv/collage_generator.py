@@ -1,43 +1,78 @@
 from PIL import Image
 from PIL import ImageOps
 import moonmask.mask as mask
-import moonmask.custom_image as custom_image
-import moonmask.moon_image as moon
+import moonmask.opencv.custom_image as custom_image
+import moonmask.opencv.moon_image as moon
+import moonmask.opencv.collage as collage
+from moonmask.opencv.mask import Mask
 from moonmask.res.constants import *
-from moonmask.word_mask import WordMask
 
 #for pixellating image, test
 import cv2
 import numpy as np
-from copy import copy
+from copy import copy, deepcopy
 import random
 
-class Collage():
+class CollageGenerator():
+    '''Stores the settings and images for a collage made up of 3 - 4 images,
+       and provides some methods for generating and saving the collage'''
 
-    def __init__(self):
-        self.main_image = None
-        self.moon_mask_negative_space = None
-        self.moon_mask_positive_space = None
-        self.moon_mask = None
-        self.img_size = (1000,1000)
+    def __init__(self, size):
+        self.base_array = None
+        self.mask_negative_array = None
+        self.mask_positive_array = None
+        self.mask = None
+        self.img_size = size
+        self.moon_image = moon.MoonImage(size=self.img_size)
         self.image_queue = {}
-        self.created_collage = None
-        self.words_main_image = None
-        self.words_positive_space = None
-        self.words_negative_space = None
+
+        self.collage_store = {}
+        self.image_store = {}
+
+        #image stylings
         self.positive_space_pixelated = False
         self.negative_space_pixelated = False
+
+        #masks
+        self.mask_store = {}
+
+    def store_image(self, key, custom_image):
+        self.image_store[key] = custom_image
+
+    def store_mask(self, key, mask):
+        print("adding a key to mask_store")
+        print(key)
+        self.mask_store[key] = mask
+
+    def create_mask(self, key, image):
+        mask = Mask(key, image)
+        self.store_mask(key, mask)
+        return self.mask_store[key]
+
+    def create_collage(self, key, size):
+        self.collage_store[key] = collage.Collage(key, size)
+        return self.collage_store[key]
+
+    def make_mask_array(self, image, channels=1):
+        self.dict_of_masks[image] = []
+        for channel in range(channels):
+            self.dict_of_masks[image].append(channel)
         return
 
-    def set_mask(self, date=None, relative_date="today", filename=None):
+    def duplicate_image(self, source_key, destination_key):
+        self.image_store[destination_key] = deepcopy(self.image_store[source_key])
+
+    def get_alpha_mask_array(self, image):
+        return self.dict_of_masks[image]
+
+    def set_moon(self, date=None, relative_date="today", filename=None):
         """Sets the image that will be used as a mask on the image
 
         Keyword arguments:
         date -- the date in format YYYYMMDD
         relative_date -- defaults to "today". Other accepted options are "yesterday" and "tomorrow"
         """
-        self.moon_image = moon.MoonImage(size=self.img_size)
-        self.moon_mask = self.moon_image.set_moon_image(date=date, relative_date=relative_date, filename=filename)
+        self.moon_image.set_moon_image(date=date, relative_date=relative_date, filename=filename)
         return
 
     def add_to_image_queue(self, image_key, image=None, url="", instagram_url="", filename="", color=""):
@@ -56,33 +91,15 @@ class Collage():
         return self.moon_image.get_moon_phase_date()
 
     def set_main_image(self, image_key, url="", instagram_url="", filename="", color=""):
-        self.main_image = self.create_image(image_key, url, instagram_url, filename, color)
+        self.base_array = self.create_image(image_key, url, instagram_url, filename, color)
         return
 
     def set_mask_negative_space(self, image_key, url="", instagram_url="", filename="", color=""):
-        self.moon_mask_negative_space = self.create_image(image_key, url, instagram_url, filename, color)
-        return
-
-    def set_main_image_words(self, words="test", invert=False):
-        self.words_main_image = WordMask(self.img_size, invert)
-        self.words_main_image.set_word_mask(words)
-        self.words_main_image = self.words_main_image.get_word_mask()
-        return
-
-    def set_positive_space_words(self, words="test", invert=False):
-        self.words_positive_space = WordMask(self.img_size, invert)
-        self.words_positive_space.set_word_mask(words)
-        self.words_positive_space = self.words_positive_space.get_word_mask()
-        return
-
-    def set_negative_space_words(self, words="test", invert=False):
-        self.words_negative_space = WordMask(self.img_size, invert)
-        self.words_negative_space.set_word_mask(words)
-        self.words_negative_space = self.words_negative_space.get_word_mask()
+        self.mask_negative_array = self.create_image(image_key, url, instagram_url, filename, color)
         return
 
     def set_mask_positive_space(self, image_key, url="", instagram_url="", filename="", color=""):
-        self.moon_mask_positive_space = self.create_image(image_key, url, instagram_url, filename, color)
+        self.mask_positive_array = self.create_image(image_key, url, instagram_url, filename, color)
         return
 
     def create_image(self, image_key, url="", instagram_url="", filename="", color=""):
@@ -90,19 +107,21 @@ class Collage():
             if not url and not instagram_url and not filename and not color:
                 raise Exception("There is no image in queue that has the key " + image_key)
             else:
-                created_image = custom_image.CustomImage(self.img_size).set_image(url, instagram_url, filename, color)
+                created_image = custom_image.CustomImage(self.img_size)
+                created_image.set_image(url, instagram_url, filename, color)
+                created_image = created_image.get_image()
                 self.image_queue[image_key] = created_image
         else:
             created_image = self.image_queue[image_key]
         return created_image
 
-    def create_collage(self, main_image_file=None, mask_file=None, positive_space_file=None, negative_space_file=None, positive_space_transparency=200, negative_space_transparency=50, dimensionality=3, img_size=1000):
+    def create_collage_old(self, main_image_file=None, mask_file=None, positive_space_file=None, negative_space_file=None, positive_space_transparency=200, negative_space_transparency=50, dimensionality=3, img_size=1000):
         img_size = (img_size, img_size)
 
         #1 - START - get the images and make them the right size
-        if self.main_image:
-            main_image = self.main_image
-            mask_shaped_main_image = self.main_image
+        if self.base_array:
+            main_image = self.base_array
+            mask_shaped_main_image = self.base_array
         else:
             main_image = Image.new('RGB', img_size, 'black')
             mask_shaped_main_image = Image.new('RGB', img_size, 'black')
@@ -112,30 +131,24 @@ class Collage():
         main_image = ImageOps.fit(main_image, img_size, Image.ANTIALIAS)
         mask_shaped_main_image = ImageOps.fit(mask_shaped_main_image, img_size, Image.ANTIALIAS)
 
-        if self.words_main_image:
-            main_image.paste(white_img, (0,0), mask=self.words_main_image)
-            mask_shaped_main_image.paste(white_img, (0,0), mask=self.words_main_image)
-
-        if self.moon_mask_negative_space:
+        if self.mask_negative_array:
             if self.negative_space_pixelated:
-                negative_space = self.pixelate_image(self.moon_mask_negative_space)
+                negative_space = self.pixelate_image(self.mask_negative_array)
             else:
-                negative_space = self.moon_mask_negative_space
+                negative_space = self.mask_negative_array
             negative_space = ImageOps.fit(negative_space, img_size, Image.ANTIALIAS)
         else:
             negative_space= Image.new('RGB',img_size,'black')
 
-        if self.moon_mask_positive_space:
+        if self.mask_positive_array:
             if self.positive_space_pixelated:
-                mask_shaped_positive_space = self.pixelate_image(self.moon_mask_positive_space)
+                mask_shaped_positive_space = self.pixelate_image(self.mask_positive_array)
             else:
-                mask_shaped_positive_space = self.moon_mask_positive_space#Image.open(positive_space_file)
+                mask_shaped_positive_space = self.mask_positive_array#Image.open(positive_space_file)
             mask_shaped_positive_space = ImageOps.fit(mask_shaped_positive_space, img_size, Image.ANTIALIAS)
         else:
             mask_shaped_positive_space = Image.new('RGB', img_size, 'white')
 
-        if self.words_main_image:
-            mask_shaped_positive_space.paste(white_img, (0,0), mask=self.words_main_image)
         #1 - END
 
         negative_space_mask = mask.Mask(negative_space, 255, img_size, negative_space_transparency).get_mask()
@@ -153,8 +166,8 @@ class Collage():
             #255 / 2 + (255 - 123) / 2 = 123
             #255 / 3 + (255 - 61 / 3) = 61
 
-            current_mask = mask.Mask(self.moon_mask, 40 * i, img_size).get_mask()
-            mask_transparent = mask.Mask(self.moon_mask, 40 * i, img_size).get_mask()
+            current_mask = mask.Mask(self.mask, 40 * i, img_size).get_mask()
+            mask_transparent = mask.Mask(self.mask, 40 * i, img_size).get_mask()
             mask_transparent = mask_transparent.point(lambda j: min(j * 25, current_transparency))
 
             mask_shaped_positive_space.putalpha(mask_transparent)
@@ -165,36 +178,58 @@ class Collage():
 
             #put positive_space over mask
             main_image.paste(mask_shaped_positive_space, (0,0), mask=mask_transparent)
-        self.created_collage = main_image
-
-    def desktop_show_collage(self):
-        self.created_collage.show()
 
     def create(self, main_image_file=None, mask_file=None, positive_space_file=None, negative_space_file=None, positive_space_transparency=200, negative_space_transparency=50, dimensionality=3, img_size=1000):
         self.create_collage(main_image_file, mask_file, positive_space_file, negative_space_file, positive_space_transparency, negative_space_transparency, dimensionality, img_size)
         self.desktop_show_collage()
 
-    def save_collage(self, filename):
-        self.created_collage.save(filename + '.jpg', format='JPEG')
+    def overlay_image_alpha(self, img, img_overlay, pos, image_for_alpha_mask):
+        """Overlay img_overlay on top of img at the position specified by
+        pos and blend using alpha_mask.
+        Alpha mask must contain values within the range [0, 1] and be the
+        same size as img_overlay.
 
-#TEST - try adding some pixellation to the moon mask
+        source: https://stackoverflow.com/a/45118011/5650506
+        """
+        x, y = pos
 
-    def pixelate_positive_space(self, radius=2, step=1, jitter=0):
-        self.positive_space_pixelated = True
+        # Image ranges
+        y1, y2 = max(0, y), min(img.shape[0], y + img_overlay.shape[0])
+        x1, x2 = max(0, x), min(img.shape[1], x + img_overlay.shape[1])
 
-    def pixelate_negative_space(self, radius=2, step=1, jitter=0):
-        self.negative_space_pixelated = True
+        # Overlay ranges
+        y1o, y2o = max(0, -y), min(img_overlay.shape[0], img.shape[0] - y)
+        x1o, x2o = max(0, -x), min(img_overlay.shape[1], img.shape[1] - x)
 
-    def get_created_collage(self):
-        return self.created_collage
+        # Exit if nothing to do
+        if y1 >= y2 or x1 >= x2 or y1o >= y2o or x1o >= x2o:
+            return
 
-    def pixelate_image(self, image, radius = 15, step = 34, jitter = 0):
-        image = image.convert('L')
-        image = np.array(image)
-        print(image.shape)
+        channels = img.shape[2]
+
+        image_for_alpha_mask = cv2.cvtColor(np.float32(image_for_alpha_mask), cv2.COLOR_BGR2GRAY)
+
+        image_for_alpha_mask = self.pixelate_image(image_for_alpha_mask)
+
+        alpha_mask = image_for_alpha_mask[:, :] / 255.0
+
+        alpha = alpha_mask[y1o:y2o, x1o:x2o]
+        alpha_inv = 1.0 - alpha
+
+        for c in range(channels):
+            img[y1:y2, x1:x2, c] = (alpha * img_overlay[y1o:y2o, x1o:x2o, c] +
+                                    alpha_inv * img[y1:y2, x1:x2, c])
+
+        self.base_array = img
+        return
+
+
+    def pixelate_image(self, image, radius = 10, step = 24, jitter = 0):
         height, width = image.shape
 
         points = copy(image)
+        step = 11
+        radius = 4
 
         for i in range(height):
             for j in range(width):
@@ -202,7 +237,6 @@ class Collage():
         xrange = np.zeros(int(height/step))
         yrange = np.zeros(int(width/step))
         for xvalue in range(len(xrange)):
-            print(xvalue)
             xrange[xvalue] = xvalue
         for yvalue in range(len(yrange)):
             yrange[yvalue] = yvalue
@@ -225,4 +259,4 @@ class Collage():
                         int(gray),
                         -1,
                         cv2.LINE_AA)
-        return Image.fromarray(points)
+        return points

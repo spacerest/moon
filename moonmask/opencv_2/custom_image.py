@@ -5,11 +5,12 @@ import numpy as np
 from copy import deepcopy
 
 class CustomImage():
-    def __init__(self, img_size, image_array=None, url=None, instagram_url=None, filename=None, color=(0,0,0)):
+    def __init__(self, img_size, key, **kwargs):
         self.size = img_size
+        self.key = key
         self.height = img_size[0]
         self.width = img_size[1]
-        self.set_image(image_array, url, instagram_url, filename, color)
+        self.set_image(**kwargs)
         return
 
     def get_image(self):
@@ -74,11 +75,18 @@ class CustomImage():
         resp = urllib.request.urlopen(url)
         self.image = np.asarray(bytearray(resp.read()), dtype="uint8")
         self.image = cv2.imdecode(self.image, cv2.IMREAD_COLOR)
-        #self.resize_image()
+        print("resizing image")
+        print(self.key)
+        self.resize_image()
         return
 
     def resize_image(self):
         #https://medium.com/@manivannan_data/resize-image-using-opencv-python-d2cdbbc480f0
         #Preferable interpolation methods are cv.INTER_AREA for shrinking and cv.INTER_CUBIC(slow) & cv.INTER_LINEAR for zooming. By default, interpolation method used is cv.INTER_LINEAR for all resizing purposes.
-        self.image = cv2.resize(self.image, self.size, interpolation=cv2.INTER_AREA)
-        #self.image = cv2.resize(self.image, self.size, interpolation=cv2.INTER_CUBIC)
+        try:
+            self.image = cv2.resize(self.image, self.size, interpolation=cv2.INTER_AREA)
+        except Exception as e:
+            print(str(e))
+        self.image = cv2.resize(self.image, self.size, interpolation=cv2.INTER_CUBIC)
+        print(self.image.shape)
+        print(self.key)
