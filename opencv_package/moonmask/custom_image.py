@@ -91,9 +91,6 @@ class CustomImage():
         print(self.image.shape)
         print(self.key)
 
-
-
-
     def pixelate_image(self, radius = 5, step = 14, jitter = 0):
         height, width, channel = self.image.shape
 

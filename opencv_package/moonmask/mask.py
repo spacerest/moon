@@ -20,8 +20,8 @@ class Mask():
         """
         mask = self.rgb_to_gray(self.image)
         mask = mask / self.mask_divisor 
-        #if not alpha_values == 0:
-        #    mask = self.normalize_mask_values(mask, alpha_values)
+        if not alpha_values == 0:
+            mask = self.normalize_mask_values(mask, alpha_values)
         return mask
 
     def prepare_mask_for_collage_combine(self):
