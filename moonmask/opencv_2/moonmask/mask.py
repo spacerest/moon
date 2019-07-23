@@ -1,20 +1,58 @@
 import cv2
 import numpy as np
 from copy import copy
+from bisect import bisect_left
 
 class Mask():
 
-    def __init__(self, size, key, image = []):
+    def __init__(self, size, key, image = [], alpha_values=0):
         self.image = image
         self.key = key
         self.size = size
-        self.mask = self.set_mask() if len(image) > 0 else None
+        self.mask = self.set_mask(alpha_values) if len(image) > 0 else None
         self.pixelated_mask = self.pixelate_mask() if len(image) > 0 else None
 
-    def set_mask(self):
+    def set_mask(self, alpha_values):
+        """
+        if alpha values is 0, all grey values in the image
+        will be included in the mask
+        """
         mask = self.rgb_to_gray(self.image)
-        mask = mask / 255
+        #mask = mask / 255
+        #if not alpha_values == 0:
+        #    mask = self.normalize_mask_values(mask, alpha_values)
         return mask
+
+    def normalize_mask_values(self, mask, alpha_values):
+        interval = 1.0 / (alpha_values - 1)
+        values_list = []
+        for x in range(alpha_values):
+            values_list.append(x * interval) 
+        for a in range(len(mask)):
+            for b in range(len(mask[a])):
+                for c in range(len(mask[a][b])):
+                    mask[a][b][c] = self.take_closest(values_list, c)
+        return mask
+
+
+    def take_closest(self, sorted_list, number):
+        """
+        source: https://stackoverflow.com/a/12141511/5650506
+        Assumes sorted_list is sorted. Returns closest value to number.
+    
+        If two numbers are equally close, return the smallest number.
+        """
+        pos = bisect_left(sorted_list, number)
+        if pos == 0:
+            return sorted_list[0]
+        if pos == len(sorted_list):
+            return sorted_list[-1]
+        before = sorted_list[pos - 1]
+        after = sorted_list[pos]
+        if after - number < number - before:
+           return after
+        else:
+           return before
 
     def rgb_to_gray(self, img):
         #https://stackoverflow.com/a/47380815/5650506

@@ -1,8 +1,8 @@
-import moonmask.opencv_2.custom_image as custom_image
+from moonmask.custom_image import CustomImage 
 from moonmask.res.constants import *
 from datetime import datetime, timezone, timedelta
 
-class MoonImage(custom_image.CustomImage):
+class MoonImage(CustomImage):
     def __init__(self, size, kw):
         self.size = size
         self.url = ""

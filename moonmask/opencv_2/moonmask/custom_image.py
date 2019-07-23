@@ -2,7 +2,7 @@ import urllib.request
 import io
 import cv2
 import numpy as np
-from copy import deepcopy
+from copy import deepcopy, copy
 
 class CustomImage():
     def __init__(self, img_size, key, **kwargs):
@@ -90,3 +90,45 @@ class CustomImage():
         self.image = cv2.resize(self.image, self.size, interpolation=cv2.INTER_CUBIC)
         print(self.image.shape)
         print(self.key)
+
+
+
+
+    def pixelate_image(self, radius = 5, step = 14, jitter = 0):
+        height, width, channel = self.image.shape
+
+        points = copy(self.image)
+
+        for i in range(height):
+            for j in range(width):
+                points[i, j] = 255
+        xrange = np.zeros(int(height/step))
+        yrange = np.zeros(int(width/step))
+        for xvalue in range(len(xrange)):
+            xrange[xvalue] = xvalue
+        for yvalue in range(len(yrange)):
+            yrange[yvalue] = yvalue
+        xrange = [value*step+step/2 for value in xrange]
+        yrange= [value*step+step/2 for value in yrange]
+        np.random.shuffle(xrange)
+        for i in xrange:
+            np.random.shuffle(yrange)
+            for j in yrange:
+                x = int(i)# + random.randint(1, 2*JITTER-JITTER))
+                y = int(j)# + random.randint(1, 2*JITTER-JITTER))
+                if(x >= height):
+                        x = height-1
+                if( y >= width):
+                        y = width-1
+                gray = self.image[x,y]
+                gray = (int(gray[0]),int(gray[1]),int(gray[2]))
+                cv2.circle(points,
+                        (y, x),
+                        radius,
+                        (gray),
+                        -1,
+                        cv2.LINE_AA)
+        self.image = points
+        return
+
+

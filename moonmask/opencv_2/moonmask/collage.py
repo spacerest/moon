@@ -32,5 +32,3 @@ class Collage():
             self.composite = copy(self.negative_space.image)
             self.composite[~self.mask.mask] = self.negative_space.image[~self.mask.mask]
             self.composite[self.mask.mask] = self.positive_space.image[self.mask.mask]#.astype(float))
-
-
