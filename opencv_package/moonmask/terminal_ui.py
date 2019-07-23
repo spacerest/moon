@@ -10,8 +10,8 @@ import math
 class TerminalUi(CollageGenerator):
     def __init__(self, size=(1000,1000)):
         super().__init__(size)
-        self.gscale1 = "████████#*oaZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'.         "
-        self.gscale2 = ' █@%#*+=-:. '
+        self.gscale1 = "#########*oaZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'.         "
+        self.gscale2 = ' #@%#*+=-:. '
 
         self.terminal_width = shutil.get_terminal_size().columns
         self.text_width = int(self.terminal_width * 0.75)
