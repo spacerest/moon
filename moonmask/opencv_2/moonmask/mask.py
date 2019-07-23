@@ -5,12 +5,13 @@ from bisect import bisect_left
 
 class Mask():
 
-    def __init__(self, size, key, image = [], alpha_values=0):
+    def __init__(self, size, key, image = [], alpha_values=0, mask_divisor=255,prep_mask_divisor=1):
         self.image = image
         self.key = key
         self.size = size
+        self.mask_divisor = mask_divisor 
+        self.prep_mask_divisor = prep_mask_divisor
         self.mask = self.set_mask(alpha_values) if len(image) > 0 else None
-        self.pixelated_mask = self.pixelate_mask() if len(image) > 0 else None
 
     def set_mask(self, alpha_values):
         """
@@ -18,10 +19,14 @@ class Mask():
         will be included in the mask
         """
         mask = self.rgb_to_gray(self.image)
-        #mask = mask / 255
+        mask = mask / self.mask_divisor 
         #if not alpha_values == 0:
         #    mask = self.normalize_mask_values(mask, alpha_values)
         return mask
+
+    def prepare_mask_for_collage_combine(self):
+        #WHEN PREP_MASK_DIVISOR IS 255, COLOR STAYS AT POSITIVE SPACE COLOR
+        return self.mask / self.prep_mask_divisor
 
     def normalize_mask_values(self, mask, alpha_values):
         interval = 1.0 / (alpha_values - 1)

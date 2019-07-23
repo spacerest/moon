@@ -25,7 +25,7 @@ class Collage():
         #creating alpha gradient image https://note.nkmk.me/en/python-numpy-generate-gradation-image/
 
         if len(self.mask.mask.shape) != 2:
-            mask = self.mask.mask / 255
+            mask = self.mask.prepare_mask_for_collage_combine()#WHEN I COMMENT OUT 255, COLOR STAYS AT POSITIVE SPACE COLOR
             self.composite = (self.negative_space.image * mask + self.positive_space.image * (1 - self.mask.mask)).astype(np.uint8)
         #CREATES A composite image FROM boolean mask
         else:
