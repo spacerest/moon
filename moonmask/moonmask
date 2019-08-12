@@ -1,7 +1,0 @@
-#!/usr/bin/env python
-
-import moonmask
-
-m = moonmask.MoonMask()
-m.set_moon_phase()
-m.save_collage()

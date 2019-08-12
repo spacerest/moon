@@ -24,12 +24,12 @@ class TestCollageGenerator(object):
         pytest.cg.selected_collage.set_positive_space(pytest.cg.image_store["white_copy"])
         pytest.cg.selected_collage.set_mask(pytest.cg.mask_store["two_value_mask"])
         pytest.cg.selected_collage.combine()
-        self.show_image(pytest.cg.selected_collage.positive_space.image, key="positive_space_image")
-        self.show_image(pytest.cg.selected_collage.negative_space.image, key="negative_space_image")
-        self.show_image(pytest.cg.selected_collage.mask.image, key="mask image")
-        self.show_image(pytest.cg.selected_collage.mask.mask.astype(np.uint8), key="mask mask")
-        self.show_image(pytest.cg.selected_collage.composite, key="composite")
-        print(1 - pytest.cg.selected_collage.mask)
+        #self.show_image(pytest.cg.selected_collage.positive_space.image, key="positive_space_image")
+        #self.show_image(pytest.cg.selected_collage.negative_space.image, key="negative_space_image")
+        #self.show_image(pytest.cg.selected_collage.mask.image, key="mask image")
+        #self.show_image(pytest.cg.selected_collage.mask.mask.astype(np.uint8), key="mask mask")
+        #self.show_image(pytest.cg.selected_collage.composite, key="composite")
+        print(1 - pytest.cg.selected_collage.mask.mask)
         print(pytest.cg.selected_collage.mask.mask)
         assert pytest.cg.selected_collage.composite.tolist()[0][0] == [0,0,255] and pytest.cg.selected_collage.composite.tolist()[2][0] == [255,255,255]
 

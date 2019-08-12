@@ -6,6 +6,7 @@ import os
 import cv2
 import shutil
 import math
+from copy import copy
 
 class TerminalUi(CollageGenerator):
     def __init__(self, size=(1000,1000)):
@@ -19,14 +20,15 @@ class TerminalUi(CollageGenerator):
         self.text_wrapper = textwrap.TextWrapper(width=self.text_width)
         self.margin_symbols = " "*(self.text_margin - 2)+"  "
 
-        self.columns_per_image = 20 
-        self.text_description_width = 20
+        self.columns_per_image = 30 
+        self.text_description_width = 30
 
     def preview(self):
         
         image_ascii_list = {} 
         for image_key in self.image_store:
-            image_ascii_list[image_key] = self.convertImageToAscii(self.image_store[image_key].image, self.columns_per_image, .5, self.gscale2)
+            im_copy = copy(self.image_store[image_key].image)
+            image_ascii_list[image_key] = self.convertImageToAscii(im_copy, self.columns_per_image, .5, self.gscale2)
 
         if len(image_ascii_list) > 0:
             self.print_ascii_art(IMAGES_TEXT)
@@ -35,7 +37,8 @@ class TerminalUi(CollageGenerator):
 
         collage_ascii_list = {}
         for image_key in self.collage_store:
-            collage_ascii_list[image_key] = self.convertImageToAscii(self.collage_store[image_key].composite, self.columns_per_image, .5, self.gscale2)
+            im_copy = copy(self.collage_store[image_key].composite) 
+            collage_ascii_list[image_key] = self.convertImageToAscii(im_copy, self.columns_per_image, .5, self.gscale2)
         
         if len(collage_ascii_list) > 0:
             self.print_ascii_art(COLLAGES_TEXT)

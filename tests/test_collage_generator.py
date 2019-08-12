@@ -92,12 +92,10 @@ class TestCollageGenerator(object):
         pytest.cg.image_to_mask(DATE, DATE, alpha_values=4)
         pytest.cg.selected_collage.set_mask(pytest.cg.mask_store[DATE])
         pytest.cg.selected_collage.combine()
-        print(pytest.cg.selected_collage.mask.mask)
-        self.show_image(pytest.cg.selected_collage.positive_space.image)
-        self.show_image(pytest.cg.selected_collage.negative_space.image)
-        self.show_image(pytest.cg.selected_collage.composite)
-        cv2.imwrite("2019-07-23_2.jpg", pytest.cg.selected_collage.composite)
-        assert False
+        #print(pytest.cg.selected_collage.mask.mask)
+        #self.show_image(pytest.cg.selected_collage.positive_space.image)
+        #self.show_image(pytest.cg.selected_collage.negative_space.image)
+        #self.show_image(pytest.cg.selected_collage.composite)
 
     def test_duplicates_mask(self):
         pytest.cg.duplicate_mask(DATE, "moon2")

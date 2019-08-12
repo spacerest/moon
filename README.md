@@ -17,9 +17,7 @@ moon ascii art courtesy of [jsg](http://www.ascii-art.de/ascii/mno/moon.txt)
 
 # moonmask
 
-This is a small library that uses PIL and Ernie Wright's moon visualizations from the Nasa Visualization Studio to create artistic renderings of moonphases. 
-
-
+This is a small library that uses numpy, opencv and Ernie Wright's moon visualizations from the Nasa Visualization Studio to create artistic renderings of moonphases. 
 
 ## intended usage (mac/linux instructions):
 
@@ -37,40 +35,28 @@ pip install moonmask
 python
 ```
 
-4. You can now run these commands to simply generate a black and white version of the current moon phase:
+4. You can now run these commands to simply see the current moon phase:
 
 ```python
->>> from moonmask.collage import Collage
->>> moonmask = Collage()
->>> moonmask.set_moon_mask()
->>> moonmask.make_collage("current_moon_phase") #current_moon_phase will be the name of the file in this example
->>> exit()
+>>> from moonmask.terminal_ui import TerminalUi 
+>>> ui = TerminalUi()
+>>> ui.set_moon("moon_today") #"moon_today" could be any key you'd like
+>>> ui.show_image("moon_today"
 ```
 
-```bash
-open current_moon_phase.png
-```
-
-You can add a few commands to make it a collage made up of different images: 
+You can add a few commands to use it in a collage made up of different images: 
 
 ```python
-
->>> from moonmask.collage import Collage
->>> moonmask = Collage()
->>> moonmask.set_mask()
->>> moonmask.set_main_image(instagram_url="https://instagram.com/p/SOME_LETTERS_NUMBERS_SYMBOLS_1/")
->>> moonmask.set_mask_positive_space(instagram_url="https://instagram.com/p/SOME_LETTERS_NUMBERS_SYMBOLS_2/")
->>> moonmask.set_mask_negative_space(instagram_url="https://instagram.com/p/SOME_LETTERS_NUMBERS_SYMBOLS_3/")
->>> moonmask.create()
->>> moonmask.save_collage("moon_collage")
->>> exit()
+>>> ui.start_new_collage("collage1")
+>>> ui.load_new_image("image1", url="SOME_URL")
+>>> ui.load_new_image("image2", filename="SOME_FILENAME")
+>>> ui.image_to_mask("moon_today", "moon_today_mask")
+>>> ui.selected_collage.set_mask(ui.mask_store["moon_today_mask"])
+>>> ui.selected_collage.set_positive_space(ui.image_store["image1"])
+>>> ui.selected_collage.set_negative_space(ui.image_store["image2"])
+>>> ui.selected_collage.combine()
+>>> ui.show_collage("collage1")
 ```
-
-```bash
-open moon_collage.png
-```
-
-There are other parameters that these functions take. For example, wherever you can use "instagram_url" as a parameter to load an image, you can instead use "url" and "filename" parameters.
 
 # Updates
 

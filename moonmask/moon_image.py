@@ -1,12 +1,18 @@
-import moonmask.custom_image as custom_image
+from moonmask.custom_image import CustomImage 
 from moonmask.res.constants import *
 from datetime import datetime, timezone, timedelta
 
-class MoonImage(custom_image.CustomImage):
-    def __init__(self, size):
+class MoonImage(CustomImage):
+    def __init__(self, size, kw):
         self.size = size
+        self.url = ""
+        self.frame_id = ""
+        self.key = kw
         super()
         return
+
+    def __str__(self):
+        return self.key
 
     def set_moon_image(self, relative_date="today", date=None, filename=None):
         """Sets the image that will be used as a mask on the image
@@ -18,7 +24,7 @@ class MoonImage(custom_image.CustomImage):
 
         #if more than one of these parameters are provided, raise an error.
         #TODO check for a cleaner way to do this
-        url = ""
+        self.url = ""
 
         if (filename == None):
             if (date):
@@ -30,10 +36,10 @@ class MoonImage(custom_image.CustomImage):
             elif (relative_date.lower() == "yesterday"):
                 self.datetime = datetime.now(timezone.utc) + timedelta(days=-1)
             self.frame_id = self.get_nasa_frame_id(date)
-            url = self.get_moon_url(date)
+            self.url = self.get_moon_url(date)
 
-        self.image = self.set_image(url=url, filename=filename)
-        return self.image
+        self.set_image(url=self.url, filename=filename)
+        return
 
     def get_nasa_frame_id(self, date):
         #code logic courtesy of Ernie Wright
@@ -48,12 +54,12 @@ class MoonImage(custom_image.CustomImage):
 
     def get_moon_url(self, date):
         self.nasa_id = NASA_ID["2019"]
-        url = "https://svs.gsfc.nasa.gov/vis/a000000/a00{year_id_modulo}/a00{year_id}/frames/730x730_1x1_30p/moon.{frame_id}.jpg".format(
+        self.url = "https://svs.gsfc.nasa.gov/vis/a000000/a00{year_id_modulo}/a00{year_id}/frames/730x730_1x1_30p/moon.{frame_id}.jpg".format(
             year_id_modulo = str(self.nasa_id - self.nasa_id % 100),
             year_id = str(self.nasa_id),
             frame_id = str(self.frame_id)
         )
-        return url
+        return self.url
 
     def save_moon(self):
         if (self.datetime and self.image):

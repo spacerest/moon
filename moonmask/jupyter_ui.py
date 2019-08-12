@@ -28,7 +28,8 @@ class JupyterUi(CollageGenerator):
         
         image_ascii_list = {} 
         for image_key in self.image_store:
-            image_ascii_list[image_key] = self.convertImageToAscii(self.image_store[image_key].image, self.columns_per_image, .5, self.gscale2)
+            im_copy = self.image_store[image_key].image
+            image_ascii_list[image_key] = self.convertImageToAscii(im_copy, self.columns_per_image, .5, self.gscale2)
 
         if len(image_ascii_list) > 0:
             self.print_ascii_art(IMAGES_TEXT)
@@ -37,7 +38,8 @@ class JupyterUi(CollageGenerator):
 
         collage_ascii_list = {}
         for image_key in self.collage_store:
-            collage_ascii_list[image_key] = self.convertImageToAscii(self.collage_store[image_key].composite, self.columns_per_image, .5, self.gscale2)
+            im_copy = self.collage_store[image_key].composite
+            collage_ascii_list[image_key] = self.convertImageToAscii(im_copy, self.columns_per_image, .5, self.gscale2)
         
         if len(collage_ascii_list) > 0:
             self.print_ascii_art(COLLAGES_TEXT)
