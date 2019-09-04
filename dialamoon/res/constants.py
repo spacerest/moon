@@ -1,9 +1,3 @@
-#for saving an instagram session
-SESSIONS_PATH = "./session.txt"
-
-#for tagging @mun_fases in instagram photos
-USERTAGS = [{'user_id': 8406048321,'position': [.1,.1]},]
-
 #ids to access the moon visualizations per year
 NASA_ID = {
     "2019": 4442,
