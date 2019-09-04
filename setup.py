@@ -4,16 +4,16 @@ from setuptools import setup, find_packages
 setup(
     name = 'dialamoon',
     packages = find_packages(),
-    version = '1.0',
+    version = '1.1',
     license='MIT',
     description = 'Gets moon visualizations courtesy of NASA/Ernie Wright',
     author = 'Sadie Parker',
     author_email = 'sadiemparker@gmail.com',
     url = 'https://github.com/spacerest/dialamoon',
-    download_url = 'https://github.com/spacerest/dialamoon/archive/v_1_0.tar.gz',
+    download_url = 'https://github.com/spacerest/dialamoon/archive/v_1_1.tar.gz',
     keywords = ['MOON', 'ART'],
     install_requires=[
-        'numpy~=1.17.1',
+        'numpy~=1.16',
         'opencv-python~=4.1.1.26'
     ],
     classifiers=[
