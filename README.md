@@ -37,7 +37,7 @@ You can test it out using terminal:
 from dialamoon.terminal_ui import TerminalUi
 
 ui = TerminalUi()
-ui.set_moon_phase() #defaults to today's date
+ui.set_moon_image() #defaults to today's date
 ui.show()
 ```
 
@@ -47,7 +47,7 @@ You can alternately test it out using Jupyter notebooks:
 from dialamoon.jupyter_ui import Jupyter
 
 ui = JupyterUi()
-ui.set_moon_phase() #defaults to today's date
+ui.set_moon_image() #defaults to today's date
 ui.show()
 ```
 
@@ -72,6 +72,6 @@ At the moment, there isn't any built in method for converting the numpy array to
 
 Please feel free to post bugs and feature requests on this repo.
 
-Resources:
+#Resources:
 - [nasa moon visualization studio](https://svs.gsfc.nasa.gov/4442)
 - [how to publish a python package on pypi](https://medium.com/@joel.barmettler/how-to-upload-your-python-package-to-pypi-65edc5fe9c56)
