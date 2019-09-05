@@ -9,7 +9,7 @@ with readme_path.open() as read_file:
 setup(
     name = 'dialamoon',
     packages = find_packages(),
-    version = '1.1',
+    version = '1.2',
     license='MIT',
     description = 'Gets moon visualizations courtesy of NASA/Ernie Wright',
     long_description_content_type="text/markdown",
@@ -17,7 +17,7 @@ setup(
     author = 'Sadie Parker',
     author_email = 'sadiemparker@gmail.com',
     url = 'https://github.com/spacerest/dialamoon',
-    download_url = 'https://github.com/spacerest/dialamoon/archive/v_1_1.tar.gz',
+    download_url = 'https://github.com/spacerest/dialamoon/archive/v_1_2.tar.gz',
     keywords = ['MOON', 'ART'],
     install_requires=[
         'numpy~=1.16',
