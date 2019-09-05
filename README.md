@@ -29,7 +29,7 @@ ui.show()
 You can alternately test it out using Jupyter notebooks:
 
 ```
-from moon.jupyter_ui import Jupyter
+from moon.jupyter_ui import JupyterUi
 
 ui = JupyterUi()
 ui.set_moon_image() #defaults to today's date
