@@ -12,6 +12,12 @@ class CustomImage():
         self.set_image(**kwargs)
         return
 
+    def save_to_disk(self, filename):
+        try:
+            cv2.imwrite(filename + ".jpg", self.image)
+        except Exception as e:
+            print(e)
+
     def get_image(self):
         return self.image
 

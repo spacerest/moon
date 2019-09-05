@@ -11,7 +11,7 @@ class Moon(CustomImage):
         return
 
     def __str__(self):
-        return self.datetime
+        return datetime.strftime(self.datetime,'%Y%m%d')
 
     def set_moon_image(self, relative_date="today", date=None):
         """Sets the image that will be used as a mask on the image
@@ -59,11 +59,9 @@ class Moon(CustomImage):
         )
         self.url = self.url
 
-    def save_to_disk(self):
-        try:
-            self.image.save("moon-image-" + self.datetime + ".jpg")
-        except Exception as e:
-            print(e)
+    def save(self, prefix="moon-image-"):
+        date = datetime.strftime(self.datetime,'%Y%m%d')
+        self.save_to_disk(prefix + date)
 
     def get_moon_phase_date(self):
         return self.datetime
