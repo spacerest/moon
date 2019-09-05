@@ -1,4 +1,4 @@
-from dialamoon.moon import Moon
+from moon.dialamoon import Moon
 import cv2
 
 class TerminalUi(Moon):
