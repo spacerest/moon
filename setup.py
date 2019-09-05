@@ -1,12 +1,19 @@
 from distutils.core import setup
 from setuptools import setup, find_packages
 
+# long_description
+readme_path = directory.joinpath("README.md")
+with readme_path.open() as read_file:
+    long_description = read_file.read()
+
 setup(
     name = 'dialamoon',
     packages = find_packages(),
     version = '1.1',
     license='MIT',
     description = 'Gets moon visualizations courtesy of NASA/Ernie Wright',
+    long_description_content_type="text/markdown",
+    long_description = long_description,
     author = 'Sadie Parker',
     author_email = 'sadiemparker@gmail.com',
     url = 'https://github.com/spacerest/dialamoon',
