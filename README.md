@@ -63,6 +63,7 @@ Please feel free to post bugs, suggestions and feature requests on this repo. Th
 
 
 moon ascii art courtesy of [jsg](http://www.ascii-art.de/ascii/mno/moon.txt)
+```
         _..._           _..._            _..._            _..._            _..._
       .:::::::.       .::::. `.        .::::  `.        .::'   `.        .'     `.
      :::::::::::     :::::::.  :      ::::::    :      :::       :      :         :  
@@ -76,6 +77,7 @@ moon ascii art courtesy of [jsg](http://www.ascii-art.de/ascii/mno/moon.txt)
      :         :     :       :::     :    ::::::      :  ::::::::      :::::::::::
      `.       .'     `.     .::'     `.   :::::'      `. '::::::'      `:::::::::'
        `-...-'         `-..:''         `-.::''          `-.::''          `':::''
+```
        
 
 
