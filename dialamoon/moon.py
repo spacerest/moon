@@ -60,8 +60,10 @@ class Moon(CustomImage):
         self.url = self.url
 
     def save_to_disk(self):
-        if (self.datetime and self.image):
+        try:
             self.image.save("moon-image-" + self.datetime + ".jpg")
+        except Exception as e:
+            print(e)
 
     def get_moon_phase_date(self):
         return self.datetime
