@@ -1,5 +1,5 @@
-from dialamoon.custom_image import CustomImage 
-from dialamoon.res.constants import *
+from moon.custom_image import CustomImage 
+from moon.res.constants import *
 from datetime import datetime, timezone, timedelta
 
 class Moon(CustomImage):
