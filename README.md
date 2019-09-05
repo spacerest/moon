@@ -72,6 +72,6 @@ At the moment, there isn't any built in method for converting the numpy array to
 
 Please feel free to post bugs and feature requests on this repo.
 
-#Resources:
+# Resources:
 - [nasa moon visualization studio](https://svs.gsfc.nasa.gov/4442)
 - [how to publish a python package on pypi](https://medium.com/@joel.barmettler/how-to-upload-your-python-package-to-pypi-65edc5fe9c56)
