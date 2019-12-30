@@ -4,7 +4,7 @@ This is a small python package that simply gets an image of a given date's moon 
 
 This package doesn't do much other than download an image from a predefined source, but I hope it's useful for someone else out there. 
 
-At time of publishing, this package can access any of the moon visualizations from 2011-2019. I suppose the way it's set up now, it'll need an update when the end of 2019 grows closer, and perhaps I'll find a better way to set it up by then.
+At time of publishing, this package can access any of the moon visualizations from 2011-2020. I suppose the way it's set up now, it'll need an update before the end of 2020, and perhaps I'll find a better way to set it up by then.
 
 # Installation 
 
