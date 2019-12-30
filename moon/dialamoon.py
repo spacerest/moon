@@ -1,6 +1,8 @@
 from moon.custom_image import CustomImage 
 from moon.res.constants import *
 from datetime import datetime, timezone, timedelta
+import urllib
+import json
 
 class Moon(CustomImage):
     def __init__(self, size=(1000,1000)):
@@ -20,10 +22,15 @@ class Moon(CustomImage):
         date -- the date in format YYYYMMDD
         relative_date -- defaults to "today". Other accepted options are "yesterday" and "tomorrow"
         """
+        self.set_moon_url(date)
+
+        self.set_image(url=self.url)
+        return
+
+    def determine_datetime(self, relative_date="today", date=None):
 
         #if more than one of these parameters are provided, raise an error.
         #TODO check for a cleaner way to do this
-        self.url = ""
 
         if (date):
             self.datetime = datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=timezone.utc)
@@ -33,13 +40,8 @@ class Moon(CustomImage):
             self.datetime = datetime.now(timezone.utc) + timedelta(days=1)
         elif (relative_date.lower() == "yesterday"):
             self.datetime = datetime.now(timezone.utc) + timedelta(days=-1)
-        self.set_nasa_frame_id(date)
-        self.set_moon_url(date)
 
-        self.set_image(url=self.url)
-        return
-
-    def set_nasa_frame_id(self, date):
+    def set_nasa_frame_id(self):
         #code logic courtesy of Ernie Wright
         year = self.datetime.year
         if (year != 2019):
@@ -65,3 +67,21 @@ class Moon(CustomImage):
 
     def get_moon_phase_date(self):
         return self.datetime
+
+    def set_moon_phase(self, relative_date="today", date=None):
+        self.url = ""
+        self.determine_datetime(relative_date, date)
+        self.set_nasa_frame_id()
+ 
+        self.set_moon_image(date)
+        self.set_moon_info(date)
+
+    def set_moon_info(self, date):
+        self.json_url = "https://svs.gsfc.nasa.gov/vis/a000000/a00{year_id_modulo}/a00{year_id}/mooninfo_{year}.json".format(
+            year_id_modulo = str(self.nasa_id - self.nasa_id % 100),
+            year_id = str(self.nasa_id),
+            frame_id = str(self.frame_id),
+            year = self.datetime.year
+        )
+        response = urllib.request.urlopen(self.json_url) 
+        self.moon_info = json.loads(response.read())[int(self.frame_id)]
