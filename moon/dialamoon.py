@@ -22,7 +22,7 @@ class Moon(CustomImage):
         date -- the date in format YYYYMMDD
         relative_date -- defaults to "today". Other accepted options are "yesterday" and "tomorrow"
         """
-        self.set_moon_url(date)
+        self.set_moon_url()
 
         self.set_image(url=self.url)
         return
@@ -44,6 +44,7 @@ class Moon(CustomImage):
     def set_nasa_frame_id(self):
         #code logic courtesy of Ernie Wright
         year = self.datetime.year
+        //todo - check why we're checking that the year isn't 2019
         if (year != 2019):
             moon_imagenum = 1
         janone = datetime(year, 1, 1, 0, 0, 0, 0, tzinfo=timezone.utc );
@@ -52,8 +53,8 @@ class Moon(CustomImage):
             moon_imagenum = 8760
         self.frame_id = str(moon_imagenum + 1).zfill(4)
 
-    def set_moon_url(self, date):
-        self.nasa_id = NASA_ID["2019"]
+    def set_moon_url(self):
+        self.nasa_id = NASA_ID[str(self.datetime.year)]
         self.url = "https://svs.gsfc.nasa.gov/vis/a000000/a00{year_id_modulo}/a00{year_id}/frames/730x730_1x1_30p/moon.{frame_id}.jpg".format(
             year_id_modulo = str(self.nasa_id - self.nasa_id % 100),
             year_id = str(self.nasa_id),
