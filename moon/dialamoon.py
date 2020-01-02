@@ -44,7 +44,7 @@ class Moon(CustomImage):
     def set_nasa_frame_id(self):
         #code logic courtesy of Ernie Wright
         year = self.datetime.year
-        //todo - check why we're checking that the year isn't 2019
+        #todo - check why we're checking that the year isn't 2019
         if (year != 2019):
             moon_imagenum = 1
         janone = datetime(year, 1, 1, 0, 0, 0, 0, tzinfo=timezone.utc );
