@@ -20,7 +20,8 @@ You can test it out using terminal:
 from moon.terminal_ui import TerminalUi
 
 ui = TerminalUi()
-ui.set_moon_image() #defaults to today's date
+ui.set_moon_phase() #defaults to today's date
+ui.set_moon_image() 
 ui.show()
 ```
 
@@ -30,7 +31,8 @@ You can alternately test it out using Jupyter notebooks:
 from moon.jupyter_ui import JupyterUi
 
 ui = JupyterUi()
-ui.set_moon_image() #defaults to today's date
+ui.set_moon_phase() #defaults to today's date
+ui.set_moon_image() 
 ui.show()
 ```
 
