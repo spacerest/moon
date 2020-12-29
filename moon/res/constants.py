@@ -1,5 +1,6 @@
 #ids to access the moon visualizations per year
 NASA_ID = {
+    "2021": 4874,
     "2020": 4768,
     "2019": 4442,
     "2018": 4604,
