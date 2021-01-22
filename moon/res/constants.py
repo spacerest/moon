@@ -1,5 +1,5 @@
 #ids to access the moon visualizations per year
-NASA_ID = {
+SVS_ID_DICT = {
     "2021": 4874,
     "2020": 4768,
     "2019": 4442,
@@ -13,4 +13,5 @@ NASA_ID = {
     "2011": 3810,
 }
 
-
+SVS_URL_BASE = "https://svs.gsfc.nasa.gov/vis/a000000/a00{year_id_modulo}/a00{year_id}/frames/730x730_1x1_30p/moon.{frame_id}.jpg"
+SVS_JSON_URL_BASE = "https://svs.gsfc.nasa.gov/vis/a000000/a00{year_id_modulo}/a00{year_id}/mooninfo_{year}.json"
