@@ -2,7 +2,6 @@ import urllib.request
 import io
 import cv2
 import numpy as np
-from PIL import Image
 from copy import deepcopy, copy
 from functools import lru_cache
 
