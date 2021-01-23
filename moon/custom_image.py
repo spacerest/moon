@@ -22,7 +22,7 @@ class CustomImage():
     def get_image(self):
         return self.image
     
-    @lru_cache(maxsize=None)#$todo undo this if possible
+    @lru_cache(maxsize=10)#$todo maybe revisit this
     def set_image(self, url=None):
         # METHOD #1: OpenCV, NumPy, and urllib
 	    # download the image, convert it to a NumPy array, and then read
@@ -34,7 +34,7 @@ class CustomImage():
         self.image = cv2.imdecode(self.image, cv2.IMREAD_COLOR)
         self.resize_image()
         #$todo not sure easy way to cache image
-        #without returning it to child obj...?
+        #without returning the ndarray to child obj...?
         return self.image
 
     def resize_image(self):

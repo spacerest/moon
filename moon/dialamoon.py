@@ -22,6 +22,7 @@ class Moon(CustomImage):
         """
         try:
             self.datetime = self.determine_datetime(date)
+            self.image = None
             self.url = self.make_moon_image_url()
         except Exception as e:
             raise e
@@ -30,10 +31,8 @@ class Moon(CustomImage):
     def request_moon_image(self):
         try:
             self.image = self.set_image(url=self.url)
-            #print(self.set_image.cache_info())
         except Exception as e:
             raise e
-        #print(self.url)
         return True
 
     def determine_datetime(self, date):
@@ -57,13 +56,19 @@ class Moon(CustomImage):
     def make_moon_image_url(self):
         try:
             self.svs_id = SVS_ID_DICT[str(self.datetime.year)]
-        except:
+        except Exception as e:
             years_available = sorted(SVS_ID_DICT.keys())
-            raise KeyError(NO_SVS_ID_ERROR.format(
-                year=self.datetime.year,
-                year_range_0=years_available[0],
-                year_range_1=years_available [-1]
-                ))
+            requested_year = self.datetime.year
+            #datetime wasn't found so unset it
+            if requested_year not in years_available:
+                self.datetime = None
+                raise KeyError(NO_SVS_ID_ERROR.format(
+                    year=requested_year,
+                    year_range_0=years_available[0],
+                    year_range_1=years_available [-1]
+                    ))
+            else:
+                raise e
         self.frame_id = self.make_nasa_frame_id()
         return SVS_URL_BASE.format(
             year_id_modulo = str(self.svs_id - self.svs_id % 100),
