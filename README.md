@@ -53,7 +53,7 @@ and access the image array itself with
 moon.image
 ```
 
-You can save the current image to disk with the method `moon.save_to_disk(filename)` or `ui.save_to_disk(filename)`, which would save a `filename.jpg` in your current directory.
+You can save the current image to disk with the method `moon.save_to_disk('filename')` or `ui.save_to_disk('filename')`, which would save a `filename.jpg` in your current directory.
 
 
 # Updates
