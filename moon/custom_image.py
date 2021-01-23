@@ -2,6 +2,7 @@ import urllib.request
 import io
 import cv2
 import numpy as np
+from PIL import Image
 from copy import deepcopy, copy
 from functools import lru_cache
 
@@ -22,17 +23,22 @@ class CustomImage():
     def get_image(self):
         return self.image
     
-    @lru_cache(maxsize=10)#$todo maybe revisit this
-    def set_image(self, url=None):
+    @lru_cache(maxsize=10)#$todo maybe revisit this maxsize
+    def set_image(self, url=None, filename=None):
         # METHOD #1: OpenCV, NumPy, and urllib
 	    # download the image, convert it to a NumPy array, and then read
 	    # it into OpenCV format
         # https://www.pyimagesearch.com/2015/03/02/convert-url-to-image-with-python-and-opencv/
-        resp = urllib.request.urlopen(url)
-        self.image_src = url
-        self.image = np.asarray(bytearray(resp.read()), dtype="uint8")
-        self.image = cv2.imdecode(self.image, cv2.IMREAD_COLOR)
-        self.resize_image()
+        if url:
+            resp = urllib.request.urlopen(url)
+            self.image_src = url
+            self.image = np.asarray(bytearray(resp.read()), dtype="uint8")
+            self.image = cv2.imdecode(self.image, cv2.IMREAD_COLOR)
+            self.resize_image()
+        elif filename:
+            self.image_src = filename
+            self.image = cv2.imread(filename)
+            self.resize_image()
         #$todo not sure easy way to cache image
         #without returning the ndarray to child obj...?
         return self.image
@@ -43,5 +49,5 @@ class CustomImage():
         try:
             self.image = cv2.resize(self.image, self.size, interpolation=cv2.INTER_AREA)
         except Exception as e:
-            print(str(e))
+            raise e
         self.image = cv2.resize(self.image, self.size, interpolation=cv2.INTER_CUBIC)

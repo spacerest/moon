@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 class JupyterUi(Moon):
 
-    def show(self, image_key):
+    def show(self):
         plt.imshow(self.image)
         plt.show()
   
