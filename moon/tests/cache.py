@@ -6,7 +6,7 @@ from time import sleep
 import numpy
 import copy
 
-class TestAsciiMoon(unittest.TestCase):
+class TestMoonCache(unittest.TestCase):
     def test_caches_json_year_data(self):
         m = Moon()
         m.set_moon_datetime(date="2019-01-01")
