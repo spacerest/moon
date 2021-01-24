@@ -78,12 +78,12 @@ You can save the current image to disk with the method `moon.save_to_disk('filen
 
 Please feel free to post bugs, suggestions and feature requests on this repo. This will be my first time creating and maintaining a python package, and I am receptive to any recommendations or PRs.
 
-- 2021-01-24
- - can include `hour` parameter in `Moon.set_moon_phase()`
+## 2021-01-24
+- can include `hour` parameter in `Moon.set_moon_phase()`
 
-- todo
- - check whether there are edge cases where json mooninfo or date attributes might not match the currently requested moon phase
- - make a clearer method for loading previously downloaded images as the current moon phase
+## todo
+- check whether there are edge cases where json mooninfo or date attributes might not match the currently requested moon phase
+- make a clearer method for loading previously downloaded images/json as the current moon phase and data
 
 # Resources:
 - [nasa moon visualization studio](https://svs.gsfc.nasa.gov/4442)
