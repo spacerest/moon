@@ -4,3 +4,4 @@ NO_SVS_ID_ERROR = "Cannot find year {year} in this version "\
                 " {year_range_1}. Please try a different year or check for an update "\
                 "for this package."
 
+HOUR_ERROR = "Hour is not between 0 and 23."

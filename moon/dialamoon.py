@@ -19,20 +19,21 @@ class Moon(CustomImage):
         try:
             self.set_moon_datetime(date)
             self.request_moon_image()
-            self.make_json_year_data_url()
-            self.set_json_year_data()
-            self.set_json_specific_data()
+            self.make_json_year_mooninfo_url()
+            self.set_mooninfo_requested_year()
+            self.set_mooninfo_requested_date()
         except Exception as e:
             raise e
         return True
 
-    def set_moon_datetime(self, date=None):
+    def set_moon_datetime(self, date=None, hour=None):
         """
         Keyword arguments:
-        date -- the date in format YYYY-MM-DD
+        date -- UTC date in format YYYY-MM-DD, defaults to current date
+        hour -- UTC hours 0 through 23, defaults to current hour
         """
         try:
-            self.datetime = self.determine_datetime(date)
+            self.datetime = self.make_datetime(date, hour)
             self.image = None
             self.url = self.make_moon_image_url()
         except Exception as e:
@@ -46,23 +47,35 @@ class Moon(CustomImage):
             raise e
         return True
 
-    def determine_datetime(self, date):
-        if date:
-            return datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=timezone.utc)
+    def make_datetime(self, date, hour):
+        # if hour and hour <= 0 or hour >= 23:
+        #     raise ValueError(HOUR_ERROR)
+        if hour is None:
+            hour = datetime.now(timezone.utc).hour
+        
+        if date is None:
+            date = datetime.now(timezone.utc)
         else:
-            return datetime.now().replace(tzinfo=timezone.utc)
+            date = datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=timezone.utc)
+        
+        year, month, day = date.year, date.month, date.day
+  
+        return datetime(year=year, month=month, day=day, hour=hour).replace(tzinfo=timezone.utc)
         
     def make_nasa_frame_id(self):
         #code logic courtesy of Ernie Wright
         year = self.datetime.year
-        #todo - check why we're checking that the year isn't 2019
-        if (year != 2019):
-            moon_imagenum = 1
-        janone = datetime(year, 1, 1, 0, 0, 0, 0, tzinfo=timezone.utc );
-        moon_imagenum = int(round((self.datetime - janone ).total_seconds() / 3600))
-        if (moon_imagenum > 8760):
-            moon_imagenum = 8760
-        return str(moon_imagenum + 1).zfill(4)
+
+        #todo - check why we were checking that the year isn't 2019
+        # if (year != 2019):
+        #     moon_imagenum = 1
+        janone = datetime(year, 1, 1, 0, 0, 0, 0, tzinfo=timezone.utc )
+        moon_imagenum = int(round((self.datetime - janone ).total_seconds() / 3600)) + 1
+
+        #todo check why this was in here
+        # if (moon_imagenum > 8760):
+        #     moon_imagenum = 8760
+        return str(moon_imagenum).zfill(4)
 
     def make_moon_image_url(self):
         try:
@@ -80,6 +93,7 @@ class Moon(CustomImage):
                     ))
             else:
                 raise e
+
         self.frame_id = self.make_nasa_frame_id()
         return SVS_URL_BASE.format(
             year_id_modulo = str(self.svs_id - self.svs_id % 100),
@@ -94,7 +108,7 @@ class Moon(CustomImage):
     def get_moon_phase_date(self):
         return self.datetime
 
-    def make_json_year_data_url(self):
+    def make_json_year_mooninfo_url(self):
         self.json_url = SVS_JSON_URL_BASE.format(
             year_id_modulo = str(self.svs_id - self.svs_id % 100),
             year_id = str(self.svs_id),
@@ -103,11 +117,11 @@ class Moon(CustomImage):
         )
 
     @lru_cache
-    def set_json_year_data(self):
+    def set_mooninfo_requested_year(self):
         response = urllib.request.urlopen(self.json_url) 
         self.moon_year_info = json.loads(response.read())
         return self.moon_year_info
 
-    def set_json_specific_data(self):
-        self.moon_datetime_info = self.moon_year_info[int(self.frame_id)]
+    def set_mooninfo_requested_date(self):
+        self.moon_datetime_info = self.moon_year_info[int(self.frame_id) - 1]
 
