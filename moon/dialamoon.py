@@ -15,9 +15,9 @@ class Moon(CustomImage):
     def __str__(self):
         return datetime.strftime(self.datetime,'%Y%m%d')
 
-    def set_moon_phase(self, date=None):
+    def set_moon_phase(self, date=None, hour=None):
         try:
-            self.set_moon_datetime(date)
+            self.set_moon_datetime(date, hour)
             self.request_moon_image()
             self.make_json_year_mooninfo_url()
             self.set_mooninfo_requested_year()
