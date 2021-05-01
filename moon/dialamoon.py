@@ -116,7 +116,7 @@ class Moon(CustomImage):
             year = self.datetime.year
         )
 
-    @lru_cache
+    @lru_cache()
     def set_mooninfo_requested_year(self):
         response = urllib.request.urlopen(self.json_url) 
         self.moon_year_info = json.loads(response.read())
