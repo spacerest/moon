@@ -78,8 +78,11 @@ You can save the current image to disk with the method `moon.save_to_disk('filen
 
 Please feel free to post bugs, suggestions and feature requests on this repo. This will be my first time creating and maintaining a python package, and I am receptive to any recommendations or PRs.
 
-## 2021-01-24
+## 1.1.2 2021-01-24
 - can include `hour` parameter in `Moon.set_moon_phase()`
+## 1.1.3 2021-05-01
+- update numpy and opencv-python versions
+- fix lru_cache decorator to fix issue #4
 
 ## todo
 - check whether there are edge cases where json mooninfo or date attributes might not match the currently requested moon phase
