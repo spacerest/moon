@@ -1,5 +1,6 @@
 #ids to access the moon visualizations per year
 SVS_ID_DICT = {
+    "2022": 4955,
     "2021": 4874,
     "2020": 4768,
     "2019": 4442,
