@@ -1,14 +1,32 @@
 from moon.custom_image import CustomImage 
-from moon.res.constants import SVS_ID_DICT, SVS_URL_BASE, SVS_JSON_URL_BASE
 from moon.res.en.ui_messages import *
 from datetime import datetime, timezone, timedelta
-import urllib
-import json
+import urllib, urllib.request, json, sys, pkg_resources
 from functools import lru_cache
+
+
+# Get strings for URLs and IDs this Moon class will need
+# https://stackoverflow.com/questions/60687577/trying-to-read-json-file-within-a-python-package
+if sys.version_info >= (3, 10):
+    import importlib.resources
+    with importlib.resources.open_text("moon.res", "constants.json") as file:
+        CONSTANTS_JSON_DICT = json.load(file)
+else:
+    import pkg_resources
+    resource_package = __name__
+    resource_path = '/'.join(('res', 'constants.json'))
+    constants_string = pkg_resources.resource_string(resource_package, resource_path)
+    CONSTANTS_JSON_DICT = json.loads(constants_string)
+
+
 
 class Moon(CustomImage):
     def __init__(self, size=(1000,1000)):
         self.size = size
+        self.SVS_ID_DICT = CONSTANTS_JSON_DICT["SVS_ID_DICT"]
+        self.SVS_URL_BASE = CONSTANTS_JSON_DICT["SVS_URL_BASE"]
+        self.SVS_JSON_URL_BASE = CONSTANTS_JSON_DICT["SVS_JSON_URL_BASE"]
+        self.GITHUB_CONSTANTS_URL = CONSTANTS_JSON_DICT["GITHUB_CONSTANTS_URL"]
         super()
         return
 
@@ -79,23 +97,35 @@ class Moon(CustomImage):
 
     def make_moon_image_url(self):
         try:
-            self.svs_id = SVS_ID_DICT[str(self.datetime.year)]
-        except Exception as e:
-            years_available = sorted(SVS_ID_DICT.keys())
+            self.svs_id = self.SVS_ID_DICT[str(self.datetime.year)]
+        except KeyError as e:
+            years_available = sorted(self.SVS_ID_DICT.keys())
             requested_year = self.datetime.year
-            #datetime wasn't found so unset it
             if requested_year not in years_available:
-                self.datetime = None
-                raise KeyError(NO_SVS_ID_ERROR.format(
-                    year=requested_year,
-                    year_range_0=years_available[0],
-                    year_range_1=years_available [-1]
-                    ))
+                # try to get the ID from the github repo
+                # in case the ID is available but the package wasn't 
+                # updated yet
+                try:
+                    response = urllib.request.urlopen(self.GITHUB_CONSTANTS_URL)
+                    remote_json_dict = json.load(response)
+                    self.SVS_ID_DICT = remote_json_dict["SVS_ID_DICT"]
+                    self.svs_id = self.SVS_ID_DICT[str(self.datetime.year)]
+                    print(UPDATED_PACKAGE_EXISTS_WITH_YEAR_ID.format(
+                        year=requested_year
+                        ))
+                except:
+                    # datetime wasn't found so unset it
+                    self.datetime = None
+                    raise KeyError(NO_SVS_ID_ERROR.format(
+                        year=requested_year,
+                        year_range_0=years_available[0],
+                        year_range_1=years_available [-1]
+                        ))
             else:
                 raise e
 
         self.frame_id = self.make_nasa_frame_id()
-        return SVS_URL_BASE.format(
+        return self.SVS_URL_BASE.format(
             year_id_modulo = str(self.svs_id - self.svs_id % 100),
             year_id = str(self.svs_id),
             frame_id = str(self.frame_id)
@@ -109,7 +139,7 @@ class Moon(CustomImage):
         return self.datetime
 
     def make_json_year_mooninfo_url(self):
-        self.json_url = SVS_JSON_URL_BASE.format(
+        self.json_url = self.SVS_JSON_URL_BASE.format(
             year_id_modulo = str(self.svs_id - self.svs_id % 100),
             year_id = str(self.svs_id),
             frame_id = str(self.frame_id),

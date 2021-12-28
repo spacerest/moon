@@ -16,3 +16,4 @@ SVS_ID_DICT = {
 
 SVS_URL_BASE = "https://svs.gsfc.nasa.gov/vis/a000000/a00{year_id_modulo}/a00{year_id}/frames/730x730_1x1_30p/moon.{frame_id}.jpg"
 SVS_JSON_URL_BASE = "https://svs.gsfc.nasa.gov/vis/a000000/a00{year_id_modulo}/a00{year_id}/mooninfo_{year}.json"
+GITHUB_CONSTANTS_URL = "https://raw.githubusercontent.com/spacerest/moon/master/moon/res/constants.py"
