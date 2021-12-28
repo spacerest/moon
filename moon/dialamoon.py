@@ -7,7 +7,7 @@ from functools import lru_cache
 
 # Get strings for URLs and IDs this Moon class will need
 # https://stackoverflow.com/questions/60687577/trying-to-read-json-file-within-a-python-package
-if sys.version_info >= (3, 10):
+if sys.version_info >= (3, 7):
     import importlib.resources
     with importlib.resources.open_text("moon.res", "constants.json") as file:
         CONSTANTS_JSON_DICT = json.load(file)
