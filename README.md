@@ -83,6 +83,10 @@ Please feel free to post bugs, suggestions and feature requests on this repo. Th
 ## 1.1.3 2021-05-01
 - update numpy and opencv-python versions
 - fix lru_cache decorator to fix issue #4
+## 1.1.4 2021-12-30
+- put constants in a `.json` file instead of a `.py` file
+- add SVS ID for 2022
+- if a SVS ID for a year isn't available, check whether it's available on in `res/constants.json` on the GitHub repo and then remind the user to update the package for next time
 
 ## todo
 - check whether there are edge cases where json mooninfo or date attributes might not match the currently requested moon phase

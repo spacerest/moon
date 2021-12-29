@@ -18,8 +18,6 @@ else:
     constants_string = pkg_resources.resource_string(resource_package, resource_path)
     CONSTANTS_JSON_DICT = json.loads(constants_string)
 
-
-
 class Moon(CustomImage):
     def __init__(self, size=(1000,1000)):
         self.size = size
@@ -103,7 +101,7 @@ class Moon(CustomImage):
             requested_year = self.datetime.year
             if requested_year not in years_available:
                 # try to get the ID from the github repo
-                # in case the ID is available but the package wasn't 
+                # in case the ID is available but the package hadn't been 
                 # updated yet
                 try:
                     response = urllib.request.urlopen(self.GITHUB_CONSTANTS_URL)
