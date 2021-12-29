@@ -20,7 +20,7 @@
 
 This is a Python package that gets an image of a given date's moon phase. It uses NumPy, OpenCV, and Ernie Wright's moon visualizations from the Dial-a-Moon project at Nasa's Scientific Visualization Studio.
 
-At time of publishing, this package can access any of the moon visualizations from 2011-2021. The way it's set up now, it'll need an update before the end of 2021.
+At time of last release, this package can access any of the moon visualizations from 2011-2022. In November of each calendar year, the data for the next year's moon becomes available on SVS, so for best performance, the new version of this package should be installed at the end of each year.
 
 # Installation 
 
@@ -83,7 +83,7 @@ Please feel free to post bugs, suggestions and feature requests on this repo. Th
 ## 1.1.3 2021-05-01
 - update numpy and opencv-python versions
 - fix lru_cache decorator to fix issue #4
-## 1.1.4 2021-12-30
+## 1.1.5 2021-12-30
 - put constants in a `.json` file instead of a `.py` file
 - add SVS ID for 2022
 - if a SVS ID for a year isn't available, check whether it's available on in `res/constants.json` on the GitHub repo and then remind the user to update the package for next time
