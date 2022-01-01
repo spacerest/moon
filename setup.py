@@ -8,7 +8,7 @@ long_description = open(readme_path, 'r').read()
 setup(
     name = 'moon',
     packages = find_packages(),
-    version = '1.1.7',
+    version = '1.1.8',
     license='MIT',
     description = 'Gets moon visualizations courtesy of SVS, NASA, Ernie Wright',
     long_description_content_type="text/markdown",
@@ -16,7 +16,7 @@ setup(
     author = 'Sadie Parker',
     author_email = 'sadiemparker@gmail.com',
     url = 'https://github.com/spacerest/moon',
-    download_url = 'https://github.com/spacerest/moon/archive/v_1_1_7.tar.gz',
+    download_url = 'https://github.com/spacerest/moon/archive/v_1_1_8.tar.gz',
     keywords = ['MOON', 'ART'],
     install_requires=[
         'numpy~=1.16',
