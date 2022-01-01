@@ -17,6 +17,9 @@ else:
     resource_path = '/'.join(('res', 'constants.json'))
     constants_string = pkg_resources.resource_string(resource_package, resource_path)
     CONSTANTS_JSON_DICT = json.loads(constants_string)
+else:
+    # todo this is a workaround when troubleshooting importing resources with package_data 
+    CONSTANTS_JSON_DICT = {}
 
 class Moon(CustomImage):
     def __init__(self, size=(1000,1000)):
@@ -81,6 +84,10 @@ class Moon(CustomImage):
     def make_nasa_frame_id(self):
         #code logic courtesy of Ernie Wright
         year = self.datetime.year
+        print("in make_nasa_frame_id:")
+        print(self.datetime.year)
+        print(self.svs_id)
+        print()
 
         #todo - check why we were checking that the year isn't 2019
         # if (year != 2019):
@@ -96,6 +103,10 @@ class Moon(CustomImage):
     def make_moon_image_url(self):
         try:
             self.svs_id = self.SVS_ID_DICT[str(self.datetime.year)]
+            print("in make_moon_image_url:")
+            print("self.datetime.year is ", self.datetime.year)
+            print("self.svs_id is ", self.svs_id)
+            print()
         except KeyError as e:
             years_available = sorted(self.SVS_ID_DICT.keys())
             requested_year = self.datetime.year
@@ -122,7 +133,9 @@ class Moon(CustomImage):
             else:
                 raise e
 
+
         self.frame_id = self.make_nasa_frame_id()
+        print("setting frame id: ", self.frame_id)
         return self.SVS_URL_BASE.format(
             year_id_modulo = str(self.svs_id - self.svs_id % 100),
             year_id = str(self.svs_id),
@@ -146,10 +159,28 @@ class Moon(CustomImage):
 
     @lru_cache()
     def set_mooninfo_requested_year(self):
+
         response = urllib.request.urlopen(self.json_url) 
         self.moon_year_info = json.loads(response.read())
         return self.moon_year_info
 
     def set_mooninfo_requested_date(self):
+        try:
+            print("going to try to update the moon_datetime_info: ")
+            print(self.moon_datetime_info['time'])
+            print(self.svs_id)
+            print(self.get_moon_phase_date())
+            print()
+        except:
+            print("no info yet")
+
         self.moon_datetime_info = self.moon_year_info[int(self.frame_id) - 1]
+        print("just tried to update moon_datetime_info:")
+        print(self.moon_datetime_info['time'])
+        print(self.svs_id)
+        print(self.get_moon_phase_date())
+        print()
+
+
+
 
