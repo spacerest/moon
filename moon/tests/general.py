@@ -71,14 +71,14 @@ class TestMoon(unittest.TestCase):
 		assert m.image_src == "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004768/"\
 		"frames/730x730_1x1_30p/moon.8784.jpg"
 
-	def test_can_get_moon_for_2022(self):
+	def test_can_get_moon_for_2024(self):
 		# note: this is just helpful for testing a version of `moon` where
-		# the SVS_ID has been added to the github repo but the user
-		# hasn't updated the package to include the new SVS_ID
+		# the SVS_ID has been added to the github repo but the
+		# package hasn't been updated to include the new SVS_ID
 		m = Moon()
-		m.set_moon_datetime(date="2022-01-15")
+		m.set_moon_datetime(date="2024-01-15")
 		m.request_moon_image()
-		assert m.SVS_ID_DICT["2022"] == 4955
+		assert m.SVS_ID_DICT["2024"] == 5187
 
 	def test_gets_new_moon_info_if_another_year_requested(self):
 		m = Moon()
