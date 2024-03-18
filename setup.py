@@ -19,9 +19,9 @@ setup(
     download_url = 'https://github.com/spacerest/moon/archive/v_1_1_9.tar.gz',
     keywords = ['MOON', 'ART'],
     install_requires=[
-        'numpy~=1.16',
-        'opencv-python~=4.5.4.60',
-        'matplotlib~=3.2.1',
+        'numpy>=1.16',
+        'opencv-python>=4.5.4.60',
+        'matplotlib>=3.8',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
