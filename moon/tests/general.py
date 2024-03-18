@@ -82,10 +82,10 @@ class TestMoon(unittest.TestCase):
 
 	def test_gets_new_moon_info_if_another_year_requested(self):
 		m = Moon()
-		m.set_moon_phase("2019-01-15")
-		# print(m.moon_datetime_info['time'])
-		m.set_moon_phase("2020-01-16")
-		# print(m.moon_datetime_info['time'])
+		m.set_moon_phase("2019-01-15", 9)
+		print(m.moon_datetime_info['time'])
+		m.set_moon_phase("2020-01-15", 9)
+		print(m.moon_datetime_info['time'])
 		assert m.moon_datetime_info['time'] == '15 Jan 2020 09:00 UT'
 
 
