@@ -1,4 +1,4 @@
-import urllib.request
+import urllib.request, certifi, ssl
 import io
 import cv2
 import numpy as np
@@ -29,7 +29,8 @@ class CustomImage():
 	    # it into OpenCV format
         # https://www.pyimagesearch.com/2015/03/02/convert-url-to-image-with-python-and-opencv/
         if url:
-            resp = urllib.request.urlopen(url)
+            # certifi_context = ssl._create_unverified_context()
+            resp = urllib.request.urlopen(url) #, context=certifi_context)
             self.image_src = url
             self.image = np.asarray(bytearray(resp.read()), dtype="uint8")
             self.image = cv2.imdecode(self.image, cv2.IMREAD_COLOR)

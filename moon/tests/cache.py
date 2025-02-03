@@ -7,17 +7,18 @@ import numpy
 import copy
 
 class TestMoonCache(unittest.TestCase):
-    def test_caches_json_year_data(self):
+    def test_caches_json_data(self):
         m = Moon()
         m.set_moon_datetime(date="2019-01-01")
-        m.make_json_year_mooninfo_url()
+        m.make_mooninfo_url()
         time1 = datetime.now()
-        m.set_mooninfo_requested_year()
+        m.set_moon_datetime_info()
         time2 = datetime.now()
         sleep(5)
         time3 = datetime.now()
-        m.set_mooninfo_requested_year()
+        m.set_moon_datetime_info()
         time4 = datetime.now()
+        print(time3, time4)
         assert (time4 - time3).seconds == 0
 
 
@@ -51,14 +52,6 @@ class TestMoonCache(unittest.TestCase):
         im3 = copy.deepcopy(m.image)
         assert url1 == url3 and numpy.array_equal(im1,im3) and (time3 - time2).seconds == 0
         assert numpy.array_equal(im1,im3)
-
-    def test_gets_json_year_data(self):
-        m = Moon()
-        m.set_moon_datetime("2019-01-01")
-        m.make_json_year_mooninfo_url()
-        m.set_mooninfo_requested_year()
-        assert m.moon_year_info[0]["time"] == '01 Jan 2019 00:00 UT'
-
 
     def test_saves_time_getting_same_moon_image(self):
         m = Moon()

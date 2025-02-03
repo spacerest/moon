@@ -1,4 +1,4 @@
-from moon.tests import cache, general 
+from moon.tests import cache, general
 import unittest
 
 unittest.main(cache, exit=False)
