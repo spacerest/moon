@@ -17,9 +17,7 @@ class TestMoon(unittest.TestCase):
 	def test_returns_helpful_error_for_datetime_mismatch(self):
 		m = Moon()
 		self.assertRaisesRegex(ValueError, r"You asked for year .* but "\
-				"DialAMoon returned year .*. "\
-				"Please check whether your requested year "\
-				"is between 2011 and the current year.",
+				r"DialAMoon appears to have returned year .*.",
 		 m.set_moon_phase, "1900-01-01")
 
 	def test_makes_a_moon_image_url(self):

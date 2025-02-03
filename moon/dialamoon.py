@@ -33,7 +33,7 @@ class Moon(CustomImage):
             self.set_moon_datetime(date, hour)
             self.request_moon_image()
             self.make_mooninfo_url()
-            self.set_moon_datetime_info()
+            self.set_moon_datetime_info(requested_datetime=self.requested_datetime)
             if self.returned_datetime.year != self.requested_datetime.year:
                 raise ValueError(YEAR_MISMATCH_ERROR.format(
                     year_requested=self.requested_datetime.year,
@@ -109,7 +109,7 @@ class Moon(CustomImage):
             )
 
     @lru_cache()
-    def set_moon_datetime_info(self):
+    def set_moon_datetime_info(self, requested_datetime=None):
         self.moon_datetime_info = json.load(urllib.request.urlopen(self.url))
         self.returned_datetime = datetime.strptime(self.moon_datetime_info["time"], '%Y-%m-%dT%H:%M')
 
