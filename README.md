@@ -62,6 +62,14 @@ ui.show()
 
 ```
 
+By default, the returned image will be unlabeled and 730x730 pixels. To resize this, use the `size` keyword argument when initializing:
+
+```
+moon = Moon(size=(100,100))
+```
+
+You can access [other information and links to other images relating to the moon on your requested date](https://svs.gsfc.nasa.gov/help/#apis-dialamoon) via `Moon.info`. 
+
 # Updates
 
 Please feel free to post bugs, suggestions and feature requests on this repo. 

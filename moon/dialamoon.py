@@ -1,7 +1,7 @@
 from moon.custom_image import CustomImage 
 from moon.res.en.ui_messages import *
 from datetime import datetime, timezone, timedelta
-import urllib, urllib.request, json, sys, pkg_resources, certifi, ssl
+import urllib, urllib.request, json, sys, pkg_resources
 from functools import lru_cache
 
 
@@ -19,8 +19,11 @@ else:
     CONSTANTS_JSON_DICT = json.loads(constants_string)
 
 class Moon(CustomImage):
-    def __init__(self, size=(1000,1000)):
-        self.size = size
+    def __init__(self, size=(730,730), highres=False):
+        if not highres:
+            self.size = size
+        else:
+            self.size = (5760,3240)
         self.DIALAMOON_API_BASE_URL = CONSTANTS_JSON_DICT["DIALAMOON_API_BASE_URL"]
         super()
         return
@@ -110,8 +113,8 @@ class Moon(CustomImage):
 
     @lru_cache()
     def set_moon_datetime_info(self, requested_datetime=None):
-        self.moon_datetime_info = json.load(urllib.request.urlopen(self.url))
-        self.returned_datetime = datetime.strptime(self.moon_datetime_info["time"], '%Y-%m-%dT%H:%M')
+        self.info = json.load(urllib.request.urlopen(self.url))
+        self.returned_datetime = datetime.strptime(self.info["time"], '%Y-%m-%dT%H:%M')
 
 
 

@@ -31,7 +31,7 @@ class TestMoon(unittest.TestCase):
 		m.set_moon_datetime(date="2019-01-01", hour=1)
 		m.make_mooninfo_url()
 		m.set_moon_datetime_info()
-		assert m.moon_datetime_info["time"] == '2019-01-01T01:00'
+		assert m.info["time"] == '2019-01-01T01:00'
 		
 	def test_gets_moon_image_as_numpy_array(self):
 		m = Moon()
@@ -72,7 +72,7 @@ class TestMoon(unittest.TestCase):
 		m = Moon()
 		m.set_moon_phase("2019-01-15", 9)
 		m.set_moon_phase("2020-01-15", 9)
-		assert m.moon_datetime_info['time'] == '2020-01-15T09:00'
+		assert m.info['time'] == '2020-01-15T09:00'
 
 	def test_no_errors_if_none_argument_for_date(self):
 		m = Moon()

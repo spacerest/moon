@@ -1,4 +1,4 @@
-import urllib.request, certifi, ssl
+import urllib.request, ssl
 import io
 import cv2
 import numpy as np
