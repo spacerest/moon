@@ -20,7 +20,6 @@ setup(
     keywords = ['MOON', 'ART', 'NASA', 'DIALAMOON'],
     install_requires=[
         "matplotlib>=3.10,<4.0",
-        "certifi>=2025.1,<2027.0",
         "numpy>=2.2,<2.5",
         "opencv-python>=4.11,<5.0",
         "setuptools>=58.1,<69.0",
