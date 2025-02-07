@@ -8,7 +8,7 @@ long_description = open(readme_path, 'r').read()
 setup(
     name = 'moon',
     packages = find_packages(),
-    version = '1.1.9',
+    version = '2.0.0',
     license='MIT',
     description = 'Gets moon visualizations courtesy of SVS, NASA, Ernie Wright',
     long_description_content_type="text/markdown",
@@ -16,14 +16,14 @@ setup(
     author = 'Sadie Parker',
     author_email = 'sadiemparker@gmail.com',
     url = 'https://github.com/spacerest/moon',
-    download_url = 'https://github.com/spacerest/moon/archive/v_1_1_9.tar.gz',
+    download_url = 'https://github.com/spacerest/moon/archive/v_2_0_0.tar.gz',
     keywords = ['MOON', 'ART', 'NASA', 'DIALAMOON'],
     install_requires=[
         "matplotlib>=3.10,<4.0",
         "numpy>=2.2,<2.5",
         "opencv-python>=4.11,<5.0",
         "setuptools>=58.1,<69.0",
-    ]
+    ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Other Audience',
