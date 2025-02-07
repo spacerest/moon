@@ -17,12 +17,14 @@ setup(
     author_email = 'sadiemparker@gmail.com',
     url = 'https://github.com/spacerest/moon',
     download_url = 'https://github.com/spacerest/moon/archive/v_1_1_9.tar.gz',
-    keywords = ['MOON', 'ART'],
+    keywords = ['MOON', 'ART', 'NASA', 'DIALAMOON'],
     install_requires=[
-        'numpy>=1.16',
-        'opencv-python>=4.5.4.60',
-        'matplotlib>=3.8',
-    ],
+        "matplotlib>=3.10,<4.0",
+        "certifi>=2025.1,<2027.0",
+        "numpy>=2.2,<2.5",
+        "opencv-python>=4.11,<5.0",
+        "setuptools>=58.1,<69.0",
+    ]
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Other Audience',
@@ -32,6 +34,10 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10'
     ],
     package_data={'constants': ['res/constants.json']},
     include_package_data=True
