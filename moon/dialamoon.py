@@ -19,11 +19,8 @@ else:
     CONSTANTS_JSON_DICT = json.loads(constants_string)
 
 class Moon(CustomImage):
-    def __init__(self, size=(730,730), highres=False):
-        if not highres:
-            self.size = size
-        else:
-            self.size = (5760,3240)
+    def __init__(self, size=(730,730)):
+        self.size = size
         self.DIALAMOON_API_BASE_URL = CONSTANTS_JSON_DICT["DIALAMOON_API_BASE_URL"]
         super()
         return
