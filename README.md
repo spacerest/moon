@@ -62,7 +62,7 @@ from moon.jupyter_ui import JupyterUi
 
 ui = JupyterUi()
 ui.set_moon_phase()  # Defaults to today's date
-print(ui.moon_datetime_info)
+print(ui.info)
 ui.show()
 ```
 
@@ -95,9 +95,9 @@ cv2.imwrite("gray_moon.jpg", gray_image)
 
 Since these dependencies are no longer required for core functionality, they may be removed in a future version.
 
-## Additional Information
+## Additional rmation
 
-You can access [more details and related lunar imagery](https://svs.gsfc.nasa.gov/help/#apis-dialamoon) via `Moon.info`.
+You can access [more details and related lunar imagery](https://svs.gsfc.nasa.gov/help/#apis-dialamoon) via `Moon.`.
 
 
 # Updates
