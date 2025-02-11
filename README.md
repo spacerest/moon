@@ -97,7 +97,7 @@ Since these dependencies are no longer required for core functionality, they may
 
 ## Additional rmation
 
-You can access [more details and related lunar imagery](https://svs.gsfc.nasa.gov/help/#apis-dialamoon) via `Moon.`.
+You can access [more details and related lunar imagery](https://svs.gsfc.nasa.gov/help/#apis-dialamoon) via `Moon.info`.
 
 
 # Updates
