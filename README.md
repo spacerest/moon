@@ -16,59 +16,89 @@
        
 
 
-# moon 
+# moon
 
-This is a Python package that gets an image of a given date's moon phase. It uses Ernie Wright's moon visualizations from the Dial-a-Moon project at Nasa's Scientific Visualization Studio.
+This is a Python package that gets an image of a given date's moon phase. It uses Ernie Wright's moon visualizations from the Dial-a-Moon project at NASA's Scientific Visualization Studio.
 
-At time of last release, this package can access any of the moon visualizations from 2011 onward.
+At the time of the last release, this package can access any of the moon visualizations from 2011 onward.
 
-# Installation 
+## Installation
 
-To install this package, just run 
+To install this package, just run:
 
-```pip install moon```
-
-# Usage
-
-Currently, this package can get a NumPy.ndarray representing the lunar phase, as well as some json of the lunar stats from the Dial-a-Moon Nasa site. This array is usable as an image using openCV, or can be saved to disk as a .jpg file.
-
-To just use it in a project, you can use it like this:
-
+```bash
+pip install moon
 ```
+
+## Usage
+
+This package retrieves a **NumPy.ndarray** representing the lunar phase, along with JSON data containing lunar statistics from NASA's Dial-a-Moon project. The image array can be manipulated with **OpenCV** and/or saved to disk as a `.jpg` file.
+
+### Basic Usage
+
+```python
 from moon.dialamoon import Moon
 
 moon = Moon()
 moon.set_moon_phase()
-
 ```
-and access the image array itself with
 
-```
+Access the image array with:
+
+```python
 moon.image
 ```
 
-You can save the current image to disk with the method `moon.save_to_disk('filename')` or `ui.save_to_disk('filename')`, which would save a `filename.jpg` in your current directory.
+Save the image to disk as `filename.jpg` with:
 
-
-You can alternately test it out using Jupyter notebooks:
-
+```python
+moon.save_to_disk('filename')
 ```
+
+### Jupyter Notebook Usage
+
+```python
 from moon.jupyter_ui import JupyterUi
 
 ui = JupyterUi()
-ui.set_moon_phase() #defaults to today's date
+ui.set_moon_phase()  # Defaults to today's date
 print(ui.moon_datetime_info)
 ui.show()
-
 ```
 
-By default, the returned image will be unlabeled and 730x730 pixels. To resize this, use the `size` keyword argument when initializing:
+### Resizing the Image
 
-```
-moon = Moon(size=(100,100))
+By default, the returned image is **730x730 pixels**. To specify a different size, use the `size` keyword argument:
+
+```python
+moon = Moon(size=(100, 100))
 ```
 
-You can access [other information and links to other images relating to the moon on your requested date](https://svs.gsfc.nasa.gov/help/#apis-dialamoon) via `Moon.info`. 
+## OpenCV & NumPy Integration
+
+The inclusion of OpenCV and NumPy in this package is a remnant of earlier versions that supported additional image processing features. While currently not necessary for core functionality, these libraries allow for further customization, such as:
+
+- **Image manipulation** (e.g., adjusting brightness, contrast, or applying filters)
+- **Overlaying text or graphics** on the moon image
+- **Efficient in-memory image processing** using NumPy arrays
+
+For example, you can use OpenCV to apply a grayscale filter:
+
+```python
+import cv2
+import numpy as np
+
+image = moon.image
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cv2.imwrite("gray_moon.jpg", gray_image)
+```
+
+Since these dependencies are no longer required for core functionality, they may be removed in a future version.
+
+## Additional Information
+
+You can access [more details and related lunar imagery](https://svs.gsfc.nasa.gov/help/#apis-dialamoon) via `Moon.info`.
+
 
 # Updates
 
