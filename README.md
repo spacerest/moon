@@ -76,11 +76,11 @@ moon = Moon(size=(100, 100))
 
 ## OpenCV & NumPy Integration
 
-The inclusion of OpenCV and NumPy in this package is a remnant of earlier versions that supported additional image processing features. While currently not necessary for core functionality, these libraries allow for further customization, such as:
+The inclusion of OpenCV and NumPy in this package is a remnant of earlier versions that supported additional image processing features. While currently not necessary for core functionality, these libraries allow for customization of images, such as
 
-- **Image manipulation** (e.g., adjusting brightness, contrast, or applying filters)
-- **Overlaying text or graphics** on the moon image
-- **Efficient in-memory image processing** using NumPy arrays
+- Adjusting brightness, contrast, applying filters
+- Overlaying text or graphics
+- Efficient in-memory image processing using NumPy arrays
 
 For example, you can use OpenCV to apply a grayscale filter:
 
@@ -93,9 +93,9 @@ gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 cv2.imwrite("gray_moon.jpg", gray_image)
 ```
 
-Since these dependencies are no longer required for core functionality, they may be removed in a future version.
+Since these dependencies are no longer required for core functionality, they will probably be removed in a future version.
 
-## Additional rmation
+## Additional Information
 
 You can access [more details and related lunar imagery](https://svs.gsfc.nasa.gov/help/#apis-dialamoon) via `Moon.info`.
 
