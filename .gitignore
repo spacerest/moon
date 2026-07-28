@@ -1,12 +1,44 @@
-venv
-**/__pycache__
-**/*.png
-images/
-*.png
-*.jpg
-**/test.py
-**/session.txt
-*egg-info
+# Virtualenvs
+venv/
+.venv/
+.temp_venv/
+env/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Jupyter
+.ipynb_checkpoints/
+Untitled*.ipynb
+
+# Editor / OS
+.DS_Store
+*.swp
+*.swo
 **sublime-project
 **sublime-workspace
-.DS_Store
+.idea/
+.vscode/
+
+# Generated moon images
+*.png
+*.jpg
+images/
+
+# Legacy patterns
+**/test.py
+**/session.txt

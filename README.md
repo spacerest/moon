@@ -1,115 +1,121 @@
 ```
         _..._           _..._            _..._            _..._            _..._
       .:::::::.       .::::. `.        .::::  `.        .::'   `.        .'     `.
-     :::::::::::     :::::::.  :      ::::::    :      :::       :      :         :  
+     :::::::::::     :::::::.  :      ::::::    :      :::       :      :         :
      :::::::::::     ::::::::  :      ::::::    :      :::       :      :         :
      `:::::::::'     `::::::' .'      `:::::   .'      `::.     .'      `.       .'
        `':::''         `'::'-'         `'::.-'           `':..-'          `-...-'
 
         _..._           _..._           _..._            _..._            _..._
       .'     `.       .'   `::.       .'  ::::.        .' .::::.        .:::::::.
-     :         :     :       :::     :    ::::::      :  ::::::::      ::::::::::: 
+     :         :     :       :::     :    ::::::      :  ::::::::      :::::::::::
      :         :     :       :::     :    ::::::      :  ::::::::      :::::::::::
      `.       .'     `.     .::'     `.   :::::'      `. '::::::'      `:::::::::'
        `-...-'         `-..:''         `-.::''          `-.::''          `':::''
 ```
-       
 
+# moon
 
-# moon 
+A Python package that fetches moon-phase images from NASA's [Dial-a-Moon API](https://svs.gsfc.nasa.gov/help/#apis-dialamoon), based on Ernie Wright's visualizations at NASA's Scientific Visualization Studio.
 
-This is a Python package that gets an image of a given date's moon phase. It uses Ernie Wright's moon visualizations from the Dial-a-Moon project at Nasa's Scientific Visualization Studio.
+Any UTC date and hour supported by the Dial-a-Moon API works (currently 2011 onward).
 
-At time of last release, this package can access any of the moon visualizations from 2011 onward.
+## Installation
 
-# Installation 
-
-To install this package, just run 
-
-```pip install moon```
-
-# Usage
-
-Currently, this package can get a NumPy.ndarray representing the lunar phase, as well as some json of the lunar stats from the Dial-a-Moon Nasa site. This array is usable as an image using openCV, or can be saved to disk as a .jpg file.
-
-To just use it in a project, you can use it like this:
-
-```
-from moon.dialamoon import Moon
-
-moon = Moon()
-moon.set_moon_phase()
-
-```
-and access the image array itself with
-
-```
-moon.image
+```bash
+pip install moon
 ```
 
-You can save the current image to disk with the method `moon.save_to_disk('filename')` or `ui.save_to_disk('filename')`, which would save a `filename.jpg` in your current directory.
+Optional Jupyter support:
 
-
-You can alternately test it out using Jupyter notebooks:
-
+```bash
+pip install "moon[jupyter]"
 ```
+
+## Usage
+
+```python
+from moon import Moon
+
+m = Moon()
+m.set_moon_phase()                    # defaults to now (UTC)
+# m.set_moon_phase(date="2025-03-14", hour=12)
+
+m.image           # numpy.ndarray, RGB uint8, shape (730, 730, 3)
+m.info            # full API response: phase, distance, illumination, etc.
+m.url             # source image URL
+m.save()          # writes moon-image-YYYYMMDD.jpg to CWD
+```
+
+Resize by passing `size` to the constructor:
+
+```python
+m = Moon(size=(100, 100))
+```
+
+In a Jupyter notebook:
+
+```python
 from moon.jupyter_ui import JupyterUi
 
 ui = JupyterUi()
-ui.set_moon_phase() #defaults to today's date
-print(ui.moon_datetime_info)
+ui.set_moon_phase()
 ui.show()
-
 ```
 
-By default, the returned image will be unlabeled and 730x730 pixels. To resize this, use the `size` keyword argument when initializing:
+In a terminal (Unicode half-blocks with truecolor, ASCII fallback):
 
+```python
+from moon.terminal_ui import TerminalUi
+
+ui = TerminalUi()
+ui.set_moon_phase()
+ui.show()                     # auto-detects truecolor support
+ui.show(mode="ascii")         # force ASCII
+ui.show(mode="blocks", width=60)
 ```
-moon = Moon(size=(100,100))
+
+`m.info` includes fields like `phase`, `age`, `distance`, `diameter`, `subsolar_lon`, `subsolar_lat`, plus a `image_highres` URL if you want a larger version. See the [Dial-a-Moon API docs](https://svs.gsfc.nasa.gov/help/#apis-dialamoon).
+
+## Development
+
+```bash
+pip install -e ".[dev]"
+pytest                    # unit tests only
+pytest -m integration     # hit the real NASA API
 ```
 
-You can access [other information and links to other images relating to the moon on your requested date](https://svs.gsfc.nasa.gov/help/#apis-dialamoon) via `Moon.info`. 
+## Changelog
 
-# Updates
+### 3.0.0 (2026)
+- Modernized packaging: `pyproject.toml` (PEP 621), Python 3.10+
+- Replaced OpenCV with Pillow (~50 MB → ~3 MB dependency)
+- Replaced `urllib` with `requests`
+- Type hints and `py.typed` marker
+- `Moon` no longer requires a subclass for basic use
+- Reimplemented `TerminalUi` with Unicode half-block truecolor rendering + ASCII fallback (was a deprecation stub in 2.0.0)
+- Removed stale SVS-ID year lookup
+- pytest test suite with mocked HTTP; opt-in integration tests
+- GitHub Actions CI across Python 3.10–3.13
+- **Breaking:** `moon.image` is now RGB (was BGR when using OpenCV). If you were passing `moon.image` back into OpenCV, swap channels with `cv2.cvtColor(m.image, cv2.COLOR_RGB2BGR)`.
+- **Breaking:** `moon.custom_image.CustomImage` and `moon.res.constants` are removed.
 
-Please feel free to post bugs, suggestions and feature requests on this repo. 
+### 2.0.0 (2024-02-01)
+- Use the Dial-a-Moon API to determine image URLs (no more yearly SVS ID updates)
+- Deprecate terminal image viewing
 
-## 2.0.0 2024-02-01
-- use the new API to determine moon image urls, so yearly IDs don't need to be added anymore
-- deprecate image viewing via terminal
-## 1.1.5 2021-12-30
-- put constants in a `.json` file instead of a `.py` file
-- add SVS ID for 2022
-- if a SVS ID for a year isn't available, check whether it's available on in `res/constants.json` on the GitHub repo and then remind the user to update the package for next time
-## 1.1.3 2021-05-01
-- update numpy and opencv-python versions
-- fix lru_cache decorator to fix issue #4
-## 1.1.2 2021-01-24
-- can include `hour` parameter in `Moon.set_moon_phase()`
+### 1.1.5 (2021-12-30)
+- Move constants to `.json`, add 2022 SVS ID, fallback to GitHub constants when a year is missing
 
+### 1.1.3 (2021-05-01)
+- Update numpy and opencv-python versions, fix `lru_cache` bug (#4)
 
-# Resources:
-- [nasa moon visualization studio](https://svs.gsfc.nasa.gov/4442)
-- [how to publish a python package on pypi](https://medium.com/@joel.barmettler/how-to-upload-your-python-package-to-pypi-65edc5fe9c56)
+### 1.1.2 (2021-01-24)
+- `Moon.set_moon_phase()` accepts an `hour` parameter
 
+## Resources
 
-moon ascii art courtesy of [jsg](http://www.ascii-art.de/ascii/mno/moon.txt)
-```
-        _..._           _..._            _..._            _..._            _..._
-      .:::::::.       .::::. `.        .::::  `.        .::'   `.        .'     `.
-     :::::::::::     :::::::.  :      ::::::    :      :::       :      :         :  
-     :::::::::::     ::::::::  :      ::::::    :      :::       :      :         :
-     `:::::::::'     `::::::' .'      `:::::   .'      `::.     .'      `.       .'
-       `':::''         `'::'-'         `'::.-'           `':..-'          `-...-'
+- [NASA Scientific Visualization Studio: Dial-a-Moon](https://svs.gsfc.nasa.gov/4442)
+- [Dial-a-Moon API](https://svs.gsfc.nasa.gov/help/#apis-dialamoon)
 
-        _..._           _..._           _..._            _..._            _..._
-      .'     `.       .'   `::.       .'  ::::.        .' .::::.        .:::::::.
-     :         :     :       :::     :    ::::::      :  ::::::::      ::::::::::: 
-     :         :     :       :::     :    ::::::      :  ::::::::      :::::::::::
-     `.       .'     `.     .::'     `.   :::::'      `. '::::::'      `:::::::::'
-       `-...-'         `-..:''         `-.::''          `-.::''          `':::''
-```
-       
-
-
-
+Moon ASCII art courtesy of [jsg](http://www.ascii-art.de/ascii/mno/moon.txt).
