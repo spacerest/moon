@@ -1,5 +1,0 @@
-  include *.py
-  include *.txt
-  recursive-include dist *.gz
-  recursive-include moon *.json
-  recursive-include moon *.txt

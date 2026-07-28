@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "moon"
+version = "3.0.0"
+description = "Fetch moon phase visualizations from NASA's Dial-a-Moon API (SVS, Ernie Wright)."
+readme = "README.md"
+license = { file = "LICENSE.txt" }
+requires-python = ">=3.10"
+authors = [{ name = "Sadie Parker", email = "sadiemparker@gmail.com" }]
+keywords = ["moon", "art", "nasa", "dialamoon", "svs", "astronomy"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Typing :: Typed",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pillow>=10.0",
+    "requests>=2.28",
+]
+
+[project.optional-dependencies]
+jupyter = ["matplotlib>=3.7"]
+dev = [
+    "pytest>=7.4",
+    "pytest-mock>=3.11",
+    "responses>=0.24",
+]
+
+[project.urls]
+Homepage = "https://github.com/spacerest/moon"
+Repository = "https://github.com/spacerest/moon"
+Issues = "https://github.com/spacerest/moon/issues"
+
+[tool.setuptools.packages.find]
+include = ["moon*"]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+moon = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-m 'not integration'"
+markers = [
+    "integration: hits the real NASA Dial-a-Moon API (requires network)",
+]
